@@ -11,20 +11,18 @@ import com.google.gson.JsonObject;
 import com.google.gson.Gson;
 import com.google.gson.JsonArray;
 import com.google.gson.JsonPrimitive;
+import com.google.gson.stream.JsonReader;
+import java.io.InputStreamReader;
+import java.util.List;
 import java.util.Map.Entry;
 
 
 public class JSonMake {
-    public static void main(String args[]) {
-
-        File filedatos = new File(".\\src\\main\\java\\com\\bieitosousa\\ad03_db\\" + "datos.json");
-        try {
-            readAsString_Json(filedatos);
-        } catch (IOException e) {
-            e.printStackTrace();
-        }
-    }
+     static File f = new File (".\\src\\main\\java\\com\\bieitosousa\\ad03_db\\XML\\XML_tarea.xml");
     
+    public static void setFile(File file){
+    f=file;
+    }
     public static void readAsString_Json(File fileJson)throws java.io.IOException 
     {
         JsonParser parser = new JsonParser();
@@ -111,7 +109,21 @@ public class JSonMake {
         return obj;
     }
     
-
+  public static List<Provincia> ReadObjJsonInFileProvincias(){
+    Gson gson = new Gson();
+       Provincias obj = null ;
+       List<Provincia> provinciasList= null;
+         try (Reader reader = new FileReader(f)) {
+        // Convert JSON File to Java Object
+        obj = gson.fromJson(reader,Provincias.class );
+         provinciasList = obj.getProvincias();
+        
+    } catch (IOException e) {
+        e.printStackTrace();
+    }
+    return provinciasList;
+}  
+   
 
 //public static Compania ReadObjJsonInFileCompania( File objectFile){
 //    Gson gson = new Gson();

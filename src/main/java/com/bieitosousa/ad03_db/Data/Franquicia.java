@@ -38,13 +38,13 @@ import java.util.HashMap;
  *
  * @author bieito
  */
-class Franquicia {
+public class Franquicia {
 
     HashMap<String, Tienda> mapTienda = new HashMap<String, Tienda>();
     HashMap<String, Producto> mapProd = new HashMap<String, Producto>();
     HashMap<String, Empleado> mapEmp = new HashMap<String, Empleado>();
     HashMap<String, Cliente> mapCli = new HashMap<String, Cliente>();
-    public static Franquicia f = null;
+    private static Franquicia f = null;
     private String name;
     protected DB_driver db = DB_driver.instance();
     protected static boolean opCli = true;//operaciones de escritura sobre Cliente
@@ -210,10 +210,26 @@ class Franquicia {
          System.out.println("seleccione un Cliente de la Franquicia");
         }
     }
+    public void delClient(String name) {
+        Cliente cli = getMapCli().get(name);
+        if (cli != null  ) {
+            deleteCliente(cli);
+        } else {
+         System.out.println("seleccione un Cliente de la Franquicia");
+        }
+    }
     public void delEmpleado(Empleado empleado) {
         Empleado em = getMapEmp().get(empleado.getName());
         if ( em != null && em.equals(empleado) ) {
             deleteEmpleado(empleado);
+         } else {
+            System.out.println("seleccione un Empleado de la Franquicia");
+        }
+    }
+    public void delEmpleado(String name) {
+        Empleado em = getMapEmp().get(name);
+        if ( em != null ) {
+            deleteEmpleado(em);
          } else {
             System.out.println("seleccione un Empleado de la Franquicia");
         }
@@ -226,10 +242,26 @@ class Franquicia {
             System.out.println("seleccione un Producto de la Franquicia");
         }
     }
+    public void delProducto(String name) {
+        Producto p = getMapProd().get(name);
+        if ( p != null  ) {
+            deleteProducto(p);
+        }else{
+            System.out.println("seleccione un Producto de la Franquicia");
+        }
+    }
     public void delTienda(Tienda tienda) {
         Tienda t = getMapTienda().get(tienda.getName());
         if (t != null && t.equals(tienda) ) {
             deleteTienda(tienda);
+        }else{
+             System.out.println("seleccione una Tienda de la Franquicia");
+        }
+    }
+    public void delTienda(String name) {
+        Tienda t = getMapTienda().get(name);
+        if (t != null  ) {
+            deleteTienda(t);
         }else{
              System.out.println("seleccione una Tienda de la Franquicia");
         }

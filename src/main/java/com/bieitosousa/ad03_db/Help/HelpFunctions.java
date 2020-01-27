@@ -153,6 +153,17 @@ public class HelpFunctions {
         }
     }
 
+    public static float inputFloat(String mensaje) {
+        Scanner reader = new Scanner(System.in);
+        System.out.print(mensaje);
+    
+        while (!reader.hasNextLine()) {
+            System.out.print(mensaje);
+            reader.next();
+        }
+        return reader.nextFloat();
+    }
+
     public void readonOnFile(File fichero) {
 
         // Fichero del que queremos leer

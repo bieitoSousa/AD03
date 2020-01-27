@@ -358,6 +358,16 @@ public class Tienda  {
         }
         System.out.println( "===================================");
     }
+    public void viewProductos(String n) {
+         if (opStock){
+            cargarProductos();
+            System.out.println("Cargando PRODUCTOS [........]");
+        }
+        System.out.println( "_____________ FRANQUICIA : "+this.name+" PRODUCTOS _____________");
+            System.out.println( mapProd.get(n).toString(this) );
+        System.out.println( "===================================");
+    }
+    
     public void viewEmpleados(){
         if (opHoras){
             cargarEmpleados();
@@ -544,5 +554,7 @@ public class Tienda  {
        getFranquicia().db.deleteTiendaEmpleado(t,em); 
        this.opHoras=true;
     }
+
+    
 
 }
