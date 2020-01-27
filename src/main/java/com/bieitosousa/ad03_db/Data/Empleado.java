@@ -23,7 +23,6 @@
  */
 package com.bieitosousa.ad03_db.Data;
 
-
 import com.bieitosousa.ad03_db.Data.Tienda;
 import java.sql.Connection;
 import java.sql.ResultSet;
@@ -36,20 +35,21 @@ import java.util.Objects;
  * @author bieito
  */
 public class Empleado {
+
     private DB_driver db = DB_driver.instance();
-    private int id = -1; 
-    private String name;        
-    private String apellidos;        
+    private int id = -1;
+    private String name;
+    private String apellidos;
     private float nHoras = (float) -1;
 
-    public Empleado( String name, String apellidos) {
+    public Empleado(String name, String apellidos) {
         this.name = name;
         this.apellidos = apellidos;
     }
 
     public int getId() {
-        if (id==-1){
-        cargarId();
+        if (id == -1) {
+            cargarId();
         }
         return id;
     }
@@ -85,9 +85,9 @@ public class Empleado {
 
     @Override
     public String toString() {
-        return "Empleado{" + "id=" + id + ", name=" + name + ", apellidos=" + apellidos +  '}';
+        return "Empleado{" + "id=" + id + ", name=" + name + ", apellidos=" + apellidos + '}';
     }
-    
+
     public String toString(Tienda t) {
         return "Empleado{" + "id=" + id + ", name=" + name + ", apellidos=" + apellidos + ", nHoras=" + getnHoras(t) + '}';
     }
@@ -118,51 +118,50 @@ public class Empleado {
         }
         return true;
     }
-    
-     //      ==== OPERACIONES LECTURA  SOBRE DB ======== \\
-     /**************************************************************
+
+    //      ==== OPERACIONES LECTURA  SOBRE DB ======== \\
+    /**
+     * ************************************************************
      * Recupera el id del Objeto : con una conslta en la DB  
-     ****************************************************************/
-    
-    
-    private void cargarId(){
-     int emplID = -1;
-           try
-            {
-                Connection con = DB_driver.getConn();
-                Statement statement = con.createStatement();
-                //Probamos a realizar unha consulta
-                ResultSet rs = statement.executeQuery("select * from EMPLEADO where EMPLEADO_name = "+this.name );
-                while(rs.next()){
-                    emplID= rs.getInt("EMPLEADO_id");
-                }
-             id= emplID;  
-            }catch(SQLException e){
-                System.err.println(e.getMessage());
-             }finally{
-            DB_driver.finishDB();
+     ***************************************************************
+     */
+    private void cargarId() {
+        int emplID = -1;
+        try {
+            Connection con = DB_driver.getConn();
+            Statement statement = con.createStatement();
+            //Probamos a realizar unha consulta
+            ResultSet rs = statement.executeQuery("select * from EMPLEADO where EMPLEADO_name = " + this.name);
+            while (rs.next()) {
+                emplID = rs.getInt("EMPLEADO_id");
             }
-    }  
+            id = emplID;
+        } catch (SQLException e) {
+            System.err.println(e.getMessage());
+        } finally {
+            DB_driver.finishDB();
+        }
+    }
 
     private void cargarHoras(Tienda t) {
-     this.nHoras = (float)-1;
-        System.out.println("comienza valiendo nHoras ="+this.nHoras);
-        try{
+        this.nHoras = (float) -1;
+        System.out.println("comienza valiendo nHoras =" + this.nHoras);
+        try {
             Connection con = db.getConn();
             Statement statement = con.createStatement();
 
             //Probamos a realizar unha consulta
-            ResultSet rs = statement.executeQuery("select nHoras from TIENDA_EMPLEADO where TIENDA_id = " +t.getId()+ " and EMPLEADO_id = "+ this.getId() );
-            while(rs.next()){
-                     this.nHoras = rs.getFloat("nHoras");
+            ResultSet rs = statement.executeQuery("select nHoras from TIENDA_EMPLEADO where TIENDA_id = " + t.getId() + " and EMPLEADO_id = " + this.getId());
+            while (rs.next()) {
+                this.nHoras = rs.getFloat("nHoras");
             }
-        }catch(SQLException e){
+        } catch (SQLException e) {
             System.err.println(e.getMessage());
-            
-        }finally{  
+
+        } finally {
             DB_driver.finishDB();
-            System.out.println("sale saliendo nhoras = "+this.nHoras);
-        }   
+            System.out.println("sale saliendo nhoras = " + this.nHoras);
+        }
     }
-    
+
 }

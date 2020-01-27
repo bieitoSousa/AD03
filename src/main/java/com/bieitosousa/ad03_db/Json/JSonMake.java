@@ -16,35 +16,35 @@ import java.io.InputStreamReader;
 import java.util.List;
 import java.util.Map.Entry;
 
-
 public class JSonMake {
-     static File f = new File (".\\src\\main\\java\\com\\bieitosousa\\ad03_db\\XML\\XML_tarea.xml");
-    
-    public static void setFile(File file){
-    f=file;
+
+    static File f = new File(".\\src\\main\\java\\com\\bieitosousa\\ad03_db\\XML\\XML_tarea.xml");
+
+    public static void setFile(File file) {
+        f = file;
     }
-    public static void readAsString_Json(File fileJson)throws java.io.IOException 
-    {
+
+    public static void readAsString_Json(File fileJson) throws java.io.IOException {
         JsonParser parser = new JsonParser();
-        
+
         FileReader fr = new FileReader(fileJson);
         JsonElement datos = parser.parse(fr);
         dumpJSONElement(datos);
     }
- 
+
     public static void dumpJSONElement(JsonElement elemento) {
         if (elemento.isJsonObject()) {
             System.out.println("Es objeto");
             JsonObject obj = elemento.getAsJsonObject();
-            java.util.Set<java.util.Map.Entry<String,JsonElement>> entradas = obj.entrySet();
-            java.util.Iterator<java.util.Map.Entry<String,JsonElement>> iter = entradas.iterator();
+            java.util.Set<java.util.Map.Entry<String, JsonElement>> entradas = obj.entrySet();
+            java.util.Iterator<java.util.Map.Entry<String, JsonElement>> iter = entradas.iterator();
             while (iter.hasNext()) {
-                java.util.Map.Entry<String,JsonElement> entrada = iter.next();
+                java.util.Map.Entry<String, JsonElement> entrada = iter.next();
                 System.out.println("Clave: " + entrada.getKey());
                 System.out.println("Valor:");
                 dumpJSONElement(entrada.getValue());
             }
-     
+
         } else if (elemento.isJsonArray()) {
             JsonArray array = elemento.getAsJsonArray();
             System.out.println("Es array. Numero de elementos: " + array.size());
@@ -69,38 +69,33 @@ public class JSonMake {
             System.out.println("Es otra cosa");
         }
     }
-    
-    public static void ObjJsontoString( Object obj ){
+
+    public static void ObjJsontoString(Object obj) {
         Gson gson = new Gson();
         System.out.println(gson.toJson(obj));
     }
 
-
-    public static void WriteObjJsonInFile( File objectFile , Object obj){
+    public static void WriteObjJsonInFile(File objectFile, Object obj) {
         Gson gson = new Gson();
 
         // Java objects to String
         // String json = gson.toJson(staff);
-
         // Java objects to File
-         try (FileWriter writer = new FileWriter(objectFile)) {
-             gson.toJson(obj, writer);
-         } catch (IOException e) {
-             e.printStackTrace();
-         }
+        try (FileWriter writer = new FileWriter(objectFile)) {
+            gson.toJson(obj, writer);
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
 
-       // System.out.println(gson.toJson(obj));
-
-
-
+        // System.out.println(gson.toJson(obj));
     }
 
-    public static Object ReadObjJsonInFile( File objectFile){
+    public static Object ReadObjJsonInFile(File objectFile) {
         Gson gson = new Gson();
-        Object obj = null ;
+        Object obj = null;
         try (Reader reader = new FileReader(objectFile)) {
             // Convert JSON File to Java Object
-            obj = gson.fromJson(reader,Object.class );
+            obj = gson.fromJson(reader, Object.class);
             // print staff object
             System.out.println(obj);
         } catch (IOException e) {
@@ -108,22 +103,21 @@ public class JSonMake {
         }
         return obj;
     }
-    
-  public static List<Provincia> ReadObjJsonInFileProvincias(){
-    Gson gson = new Gson();
-       Provincias obj = null ;
-       List<Provincia> provinciasList= null;
-         try (Reader reader = new FileReader(f)) {
-        // Convert JSON File to Java Object
-        obj = gson.fromJson(reader,Provincias.class );
-         provinciasList = obj.getProvincias();
-        
-    } catch (IOException e) {
-        e.printStackTrace();
+
+    public static List<Provincia> ReadObjJsonInFileProvincias() {
+        Gson gson = new Gson();
+        Provincias obj = null;
+        List<Provincia> provinciasList = null;
+        try (Reader reader = new FileReader(f)) {
+            // Convert JSON File to Java Object
+            obj = gson.fromJson(reader, Provincias.class);
+            provinciasList = obj.getProvincias();
+
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
+        return provinciasList;
     }
-    return provinciasList;
-}  
-   
 
 //public static Compania ReadObjJsonInFileCompania( File objectFile){
 //    Gson gson = new Gson();
@@ -138,8 +132,4 @@ public class JSonMake {
 //    }
 //    return obj;
 //}
-
 }
-
-
-

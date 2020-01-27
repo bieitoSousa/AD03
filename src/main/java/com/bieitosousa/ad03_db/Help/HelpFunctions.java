@@ -36,25 +36,16 @@ import java.util.Scanner;
  */
 public class HelpFunctions {
 
-    
-
-
     // public static void main(String[] args) throws Exception {
     //    int letra1 = inputInt("dimeletra 1");
     //    int letra2 = inputInt("dimeletra 1");
     //    int letra3 = inputInt("dimeletra 1");
     //    int letra4 = inputInt("dimeletra 1");
     //    System.out.println(letra1+letra2+letra3+letra4);
-  
-
     // }
-
-
-
     // public static int inputInt(String mensaje) {
     //     Scanner reader = new Scanner(System.in); // Invocamos un método sobre un objeto Scanner
     //     int op = -1;
-
     //     boolean salir = false;
     //     while (!salir) {
     //         System.out.println(mensaje);
@@ -69,40 +60,41 @@ public class HelpFunctions {
     //         salir = true;
     //     }
     //     reader.close(); // Cerramos el objeto Scanner
-
     //     return op;
     // }
-
     public static String inputString(String mensaje) {
         Scanner reader = new Scanner(System.in);
         System.out.print(mensaje);
-    
+
         while (!reader.hasNextLine()) {
             System.out.print(mensaje);
             reader.next();
         }
         return reader.nextLine();
     }
-        //reader.close(); // Cerramos el objeto Scanner
+    //reader.close(); // Cerramos el objeto Scanner
 
-    public static boolean whiteSpace (String msnj){
+    public static boolean whiteSpace(String msnj) {
         if (msnj.equals("")) {
             return false;
-        }else if (msnj.contains(" ")){
+        } else if (msnj.contains(" ")) {
             return false;
-    }else return true;
-
-    }     
-    public static int inputInt(String mensaje) {
-            Scanner reader = new Scanner(System.in);
-            System.out.print(mensaje);
-        
-            while (!reader.hasNextInt()) {
-                System.out.print(mensaje);
-                reader.next();
-            }
-            return reader.nextInt();
+        } else {
+            return true;
         }
+
+    }
+
+    public static int inputInt(String mensaje) {
+        Scanner reader = new Scanner(System.in);
+        System.out.print(mensaje);
+
+        while (!reader.hasNextInt()) {
+            System.out.print(mensaje);
+            reader.next();
+        }
+        return reader.nextInt();
+    }
 
     public static void writeOnFile(File f, String[] lineas) {
         FileWriter fichero = null;
@@ -116,13 +108,14 @@ public class HelpFunctions {
 
         } catch (Exception ex) {
             System.out.println("Mensaje de la excepción: " + ex.getMessage());
-        
+
         } finally {
             try {
                 // Nuevamente aprovechamos el finally para
                 // asegurarnos que se cierra el fichero.
-                if (null != fichero)
+                if (null != fichero) {
                     fichero.close();
+                }
             } catch (Exception e2) {
                 e2.printStackTrace();
             }
@@ -132,7 +125,7 @@ public class HelpFunctions {
     public static void writeNextOnFile(File f, String[] lineas) {
         FileWriter fichero = null;
         try {
-            fichero = new FileWriter(f,true);
+            fichero = new FileWriter(f, true);
             // Escribimos linea a linea en el fichero
             for (String linea : lineas) {
                 fichero.write(linea + "\n");
@@ -140,13 +133,14 @@ public class HelpFunctions {
 
         } catch (Exception ex) {
             System.out.println("Mensaje de la excepción: " + ex.getMessage());
-        
+
         } finally {
             try {
                 // Nuevamente aprovechamos el finally para
                 // asegurarnos que se cierra el fichero.
-                if (null != fichero)
+                if (null != fichero) {
                     fichero.close();
+                }
             } catch (Exception e2) {
                 e2.printStackTrace();
             }
@@ -156,7 +150,7 @@ public class HelpFunctions {
     public static float inputFloat(String mensaje) {
         Scanner reader = new Scanner(System.in);
         System.out.print(mensaje);
-    
+
         while (!reader.hasNextLine()) {
             System.out.print(mensaje);
             reader.next();
@@ -170,8 +164,7 @@ public class HelpFunctions {
         //File fichero = new File("urlFichero");
         Scanner s = null;
 
-        try
-        {
+        try {
             // Leemos el contenido del fichero
             System.out.println("... Leemos el contenido del fichero ...");
             s = new Scanner(fichero);
@@ -182,33 +175,29 @@ public class HelpFunctions {
                 System.out.println(linea); // Imprimimos la linea
             }
 
-        }catch(
-        Exception ex)
-        {
+        } catch (Exception ex) {
             System.out.println("Mensaje: " + ex.getMessage());
-        }finally
-        {
+        } finally {
             // Cerramos el fichero tanto si la lectura ha sido correcta o no
             try {
-                if (s != null)
+                if (s != null) {
                     s.close();
+                }
             } catch (Exception ex2) {
                 System.out.println("Mensaje 2: " + ex2.getMessage());
             }
         }
     }
 
-
-    public static String[] readonOnFile(File fichero,boolean bool) {
+    public static String[] readonOnFile(File fichero, boolean bool) {
 
         // Fichero del que queremos leer
         //File fichero = new File("urlFichero");
         Scanner s = null;
-        String arry[] = null; 
-        List<String> lineas = new ArrayList<String>(); 
+        String arry[] = null;
+        List<String> lineas = new ArrayList<String>();
 
-        try
-        {
+        try {
             // Leemos el contenido del fichero
             System.out.println("... Leemos el contenido del fichero ...");
             s = new Scanner(fichero);
@@ -216,30 +205,27 @@ public class HelpFunctions {
             // Leemos linea a linea el fichero
             while (s.hasNextLine()) {
                 String linea = s.nextLine(); // Guardamos la linea en un String
-                if (bool){
-                lineas.add(linea);
-               }else {
-                System.out.println(linea); // Imprimimos la linea
-               } 
+                if (bool) {
+                    lineas.add(linea);
+                } else {
+                    System.out.println(linea); // Imprimimos la linea
+                }
             }
 
-        }catch(
-        Exception ex)
-        {
+        } catch (Exception ex) {
             System.out.println("Mensaje: " + ex.getMessage());
-        }finally
-        {
+        } finally {
             // Cerramos el fichero tanto si la lectura ha sido correcta o no
             try {
-                if (s != null)
+                if (s != null) {
                     s.close();
+                }
             } catch (Exception ex2) {
                 System.out.println("Mensaje 2: " + ex2.getMessage());
             }
         }
-         arry = lineas.toArray(new String[lineas.size()]);
+        arry = lineas.toArray(new String[lineas.size()]);
         return arry;
     }
 
-}   
-
+}

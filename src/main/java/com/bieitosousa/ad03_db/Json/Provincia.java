@@ -28,7 +28,8 @@ package com.bieitosousa.ad03_db.Json;
  * @author bieito
  */
 public class Provincia {
-     private int id;
+
+    private int id;
     private String nome;
 
     public Provincia(int id, String nome) {
@@ -51,5 +52,5 @@ public class Provincia {
     public void setNome(String nome) {
         this.nome = nome;
     }
-    
+
 }

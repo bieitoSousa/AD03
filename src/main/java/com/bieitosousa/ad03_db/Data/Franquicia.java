@@ -52,80 +52,73 @@ public class Franquicia {
     protected static boolean opEmp = true;//operaciones de escritura sobre Empleado
     protected static boolean opProd = true;//operaciones de escritura sobre Producto
 
-    public static Franquicia getInstance(){
-        if (f == null){
-            f= new Franquicia();
+    public static Franquicia getInstance() {
+        if (f == null) {
+            f = new Franquicia();
         }
         return f;
     }
-    
-    public Franquicia(){}
-    
-/***    ... METODOS PUBLICOS ...    ***/
-    
-     /**************************************************************
-     * METODOS toString
 
-     ***************************************************************/
-    
+    public Franquicia() {
+    }
+
+    /**
+     * * ... METODOS PUBLICOS ...    **
+     */
+    /**
+     * ************************************************************
+     * METODOS toString
+     *
+     **************************************************************
+     */
     @Override
     public String toString() {
         return "Franquicia{" + "mapTienda=" + mapTienda + ", mapProd=" + mapProd + ", mapEmp=" + mapEmp + ", mapCli=" + mapCli + ", name=" + name + ", db=" + db + '}';
     }
-     
-    
-    /**************************************************************
-     * METODOS GET
-     # evalua op{name} : determina si hubo operaciones de escritura en la DB 
-     # true : Carga los datos de la DB.
-     # false : Carga los datos de la memoria.
-     *  = getMapEmp
-     *  = getMapCli
-     *  = getMapProd
-     *  = getMapTienda
-         *
-     ****************************************************************/
-    
-    
-    
+
+    /**
+     * ************************************************************
+     * METODOS GET # evalua op{name} : determina si hubo operaciones de
+     * escritura en la DB # true : Carga los datos de la DB. # false : Carga los
+     * datos de la memoria. = getMapEmp = getMapCli = getMapProd = getMapTienda
+     *
+     ***************************************************************
+     */
     public HashMap<String, Tienda> getMapTienda() {
-        if (opTi){
-        cargarTiendas();
+        if (opTi) {
+            cargarTiendas();
         }
         return mapTienda;
     }
-   
+
     public HashMap<String, Producto> getMapProd() {
-        if(opProd){
-        cargarProductos();
+        if (opProd) {
+            cargarProductos();
         }
         return mapProd;
     }
 
     public HashMap<String, Empleado> getMapEmp() {
-        if(opEmp){
-        cargarEmpleados();
+        if (opEmp) {
+            cargarEmpleados();
         }
         return mapEmp;
     }
-    
+
     public HashMap<String, Cliente> getMapCli() {
-        if(opCli){
-        cargarClientes();
+        if (opCli) {
+            cargarClientes();
         }
         return mapCli;
     }
-    
-     /**************************************************************
-     * METODOS SET
-     # guarda los datos en memoria
-     *  = setMapEmp
-     *  = setMapCli
-     *  = setMapProd
-     *  = setMapTienda
-         *
-     ****************************************************************/
 
+    /**
+     * ************************************************************
+     * METODOS SET # guarda los datos en memoria = setMapEmp = setMapCli =
+     * setMapProd = setMapTienda
+     *
+     ***************************************************************
+     */
     public void setMapTienda(HashMap<String, Tienda> mapTienda) {
         this.mapTienda = mapTienda;
     }
@@ -141,390 +134,390 @@ public class Franquicia {
     public void setListCli(HashMap<String, Cliente> mapCli) {
         this.mapCli = mapCli;
     }
- 
-    /**************************************************************
-     * METODOS ADD
-     # llama a un metodo privado para inserta  los Objetos datos en la DB
-     *  = addEmpleado => Obj Empleado
-     *  = addClient => Obj Cliente
-     *  = addProdducto    => Obj Producto
-     *  = addTienda  => Obj Tienda
-     # En el metodo privado se determina op{name} = true 
-     *      se ha escrito en la DB 
-     ****************************************************************/
-    
+
+    /**
+     * ************************************************************
+     * METODOS ADD # llama a un metodo privado para inserta los Objetos datos en
+     * la DB = addEmpleado => Obj Empleado = addClient => Obj Cliente =
+     * addProdducto => Obj Producto = addTienda => Obj Tienda # En el metodo
+     * privado se determina op{name} = true se ha escrito en la DB 
+     ***************************************************************
+     */
     public void addClient(Cliente cliente) {
         Cliente cli = getMapCli().get(cliente.getName());
-        if ( cli == null || ( cli != null && !cli.equals(cliente)) ) {
+        if (cli == null || (cli != null && !cli.equals(cliente))) {
             insertCliente(cliente);
         } else {
-             System.out.println("El cliente "+cli.toString() +" ya existe, introduzca un nuevo cliente");
+            System.out.println("El cliente " + cli.toString() + " ya existe, introduzca un nuevo cliente");
         }
     }
+
     public void addEmpleado(Empleado empleado) {
         Empleado em = getMapEmp().get(empleado.getName());
-            if ( em == null || ( em != null && !em.equals(empleado) )) {
-                insertEmpleado(empleado);             
-            } else { 
-             System.out.println("El Empleado "+em.toString() +" ya existe, introduzca un nuevo Empleado");
-            }
-    }
-    public void addProducto(Producto producto) {
-        Producto p = getMapProd().get(producto.getName());
-        if ( p == null || ( p != null && ! p.equals(producto) )) {
-            insertProducto(producto); 
-            } else { 
-            System.out.println("El producto "+p.toString() +" ya existe, introduzca un nuevo Producto");
+        if (em == null || (em != null && !em.equals(empleado))) {
+            insertEmpleado(empleado);
+        } else {
+            System.out.println("El Empleado " + em.toString() + " ya existe, introduzca un nuevo Empleado");
         }
     }
+
+    public void addProducto(Producto producto) {
+        Producto p = getMapProd().get(producto.getName());
+        if (p == null || (p != null && !p.equals(producto))) {
+            insertProducto(producto);
+        } else {
+            System.out.println("El producto " + p.toString() + " ya existe, introduzca un nuevo Producto");
+        }
+    }
+
     public void addTienda(Tienda tienda) {
         Tienda t = getMapTienda().get(tienda.getName());
-        if ( t == null || ( t != null && !t.equals(tienda) )) {
-            if(t!=null){
-                System.out.println(" name  => "+t.getName()+" ; "+tienda.getName());
-                System.out.println(" ciudad  => "+t.getCiudad()+" ; "+tienda.getCiudad());
-                System.out.println(" provincia  => "+t.getProvincia()+" ; "+tienda.getProvincia());
+        if (t == null || (t != null && !t.equals(tienda))) {
+            if (t != null) {
+                System.out.println(" name  => " + t.getName() + " ; " + tienda.getName());
+                System.out.println(" ciudad  => " + t.getCiudad() + " ; " + tienda.getCiudad());
+                System.out.println(" provincia  => " + t.getProvincia() + " ; " + tienda.getProvincia());
             }
             insertTienda(tienda);
         } else {
-            System.out.println("La tienda "+t.toString() +" ya existe, introduzca una nueva Tienda");   
+            System.out.println("La tienda " + t.toString() + " ya existe, introduzca una nueva Tienda");
         }
     }
-        /**************************************************************
-     * METODOS DEL
-     # llama a un metodo privado para eliminar  los Objetos datos en la DB
-     *  = delEmpleado => Obj Empleado
-     *  = delClient => Obj Cliente
-     *  = delProducto    => Obj Producto
-     *  = delTienda  => Obj Tienda
-     # En el metodo privado se determina op{name} = true 
-     *      se ha escrito en la DB 
-     ****************************************************************/
-    
-    
+
+    /**
+     * ************************************************************
+     * METODOS DEL # llama a un metodo privado para eliminar los Objetos datos
+     * en la DB = delEmpleado => Obj Empleado = delClient => Obj Cliente =
+     * delProducto => Obj Producto = delTienda => Obj Tienda # En el metodo
+     * privado se determina op{name} = true se ha escrito en la DB 
+     ***************************************************************
+     */
+
     public void delClient(Cliente cliente) {
         Cliente cli = getMapCli().get(cliente.getName());
-        if (cli != null && cli.equals(cliente) ) {
+        if (cli != null && cli.equals(cliente)) {
             deleteCliente(cliente);
         } else {
-         System.out.println("seleccione un Cliente de la Franquicia");
+            System.out.println("seleccione un Cliente de la Franquicia");
         }
     }
+
     public void delClient(String name) {
         Cliente cli = getMapCli().get(name);
-        if (cli != null  ) {
+        if (cli != null) {
             deleteCliente(cli);
         } else {
-         System.out.println("seleccione un Cliente de la Franquicia");
+            System.out.println("seleccione un Cliente de la Franquicia");
         }
     }
+
     public void delEmpleado(Empleado empleado) {
         Empleado em = getMapEmp().get(empleado.getName());
-        if ( em != null && em.equals(empleado) ) {
+        if (em != null && em.equals(empleado)) {
             deleteEmpleado(empleado);
-         } else {
+        } else {
             System.out.println("seleccione un Empleado de la Franquicia");
         }
     }
+
     public void delEmpleado(String name) {
         Empleado em = getMapEmp().get(name);
-        if ( em != null ) {
+        if (em != null) {
             deleteEmpleado(em);
-         } else {
+        } else {
             System.out.println("seleccione un Empleado de la Franquicia");
         }
     }
+
     public void delProducto(Producto producto) {
         Producto p = getMapProd().get(producto.getName());
-        if ( p != null && p.equals(producto) ) {
+        if (p != null && p.equals(producto)) {
             deleteProducto(producto);
-        }else{
+        } else {
             System.out.println("seleccione un Producto de la Franquicia");
         }
     }
+
     public void delProducto(String name) {
         Producto p = getMapProd().get(name);
-        if ( p != null  ) {
+        if (p != null) {
             deleteProducto(p);
-        }else{
+        } else {
             System.out.println("seleccione un Producto de la Franquicia");
         }
     }
+
     public void delTienda(Tienda tienda) {
         Tienda t = getMapTienda().get(tienda.getName());
-        if (t != null && t.equals(tienda) ) {
+        if (t != null && t.equals(tienda)) {
             deleteTienda(tienda);
-        }else{
-             System.out.println("seleccione una Tienda de la Franquicia");
+        } else {
+            System.out.println("seleccione una Tienda de la Franquicia");
         }
     }
+
     public void delTienda(String name) {
         Tienda t = getMapTienda().get(name);
-        if (t != null  ) {
+        if (t != null) {
             deleteTienda(t);
-        }else{
-             System.out.println("seleccione una Tienda de la Franquicia");
+        } else {
+            System.out.println("seleccione una Tienda de la Franquicia");
         }
     }
-    /**************************************************************
-     * METODOS VIEW
-     * VIEW{Name} recorre e imprimir los mapas 
-     *  = mapEmp
-     *  = mapCli
-     *  = mapProd
-     *  = mapTienda
-     * ===================
-     *  evalua : op{Name} = true --> Los datos se han modificado :
-     *                               \-> hay que cargar los datos en memoria. 
-     *                       false --> Los datos no se modificaron :
-     *                               \-> no hay que cargar datos en memoria.
-     ****************************************************************/
-    public void viewEmpleados(){
-        if (opEmp){
+
+    /**
+     * ************************************************************
+     * METODOS VIEW VIEW{Name} recorre e imprimir los mapas = mapEmp = mapCli =
+     * mapProd = mapTienda =================== evalua : op{Name} = true --> Los
+     * datos se han modificado : \-> hay que cargar los datos en memoria. false
+     * --> Los datos no se modificaron : \-> no hay que cargar datos en memoria.
+     ***************************************************************
+     */
+    public void viewEmpleados() {
+        if (opEmp) {
             cargarEmpleados();
             System.out.println("Cargando Empleados [........]");
         }
-        System.out.println( "_____________ FRANQUICIA : EMPLEADOS _____________");
-        for (Empleado em : mapEmp.values()){
+        System.out.println("_____________ FRANQUICIA : EMPLEADOS _____________");
+        for (Empleado em : mapEmp.values()) {
             System.out.println(em.toString());
         }
-        System.out.println( "===================================");
+        System.out.println("===================================");
     }
-    public void viewClientes(){
-        if (opCli){
+
+    public void viewClientes() {
+        if (opCli) {
             cargarClientes();
-             System.out.println("Cargando Clientes [........]");
+            System.out.println("Cargando Clientes [........]");
         }
-        System.out.println( "_____________ FRANQUICIA : CLIENTES_____________");
-        for (Cliente cli : mapCli.values()){
+        System.out.println("_____________ FRANQUICIA : CLIENTES_____________");
+        for (Cliente cli : mapCli.values()) {
             System.out.println(cli.toString());
         }
-        System.out.println( "===================================");
+        System.out.println("===================================");
     }
-    public void viewProductos(){
-        if (opProd){
+
+    public void viewProductos() {
+        if (opProd) {
             cargarProductos();
             System.out.println("Cargando Productos [........]");
         }
-        System.out.println( "_____________ FRANQUICIA : PRODUCTOS_____________");
-        for (Producto p : mapProd.values()){
+        System.out.println("_____________ FRANQUICIA : PRODUCTOS_____________");
+        for (Producto p : mapProd.values()) {
             System.out.println(p.toString());
         }
-        System.out.println( "===================================");
+        System.out.println("===================================");
     }
-     public void viewTiendas(){
-        if (opTi){
+
+    public void viewTiendas() {
+        if (opTi) {
             cargarTiendas();
             System.out.println("Cargando Tiendas [........]");
         }
-        System.out.println( "_____________ FRANQUICIA : TIENDAS_____________");
-        for (Tienda t : mapTienda.values()){
+        System.out.println("_____________ FRANQUICIA : TIENDAS_____________");
+        for (Tienda t : mapTienda.values()) {
             System.out.println(t.toString());
         }
-        System.out.println( "===================================");
+        System.out.println("===================================");
     }
-     
-      /***    ... METODOS PRIVATE ...    ***/
-     
-    //      ==== OPERACIONES LECTURA  SOBRE DB ======== \\
-     /**************************************************************
-     * cargar{Name} instancia un mapa de objeto a partir de un consulta en la dB  
-     *  cargarEmpleados()   =>   mapEmp
-     *  cargarClientes      =>   mapCli
-     *  cargarProductos     =>   mapProd
-     *  cargarTiendas       =>   mapTienda
-     * ===================
-     * op{Name} = false --> Los datos no se han modificado desde la ultima carga en memoria
-     ****************************************************************/ 
-            
-    private void cargarEmpleados() {
-        HashMap<String, Empleado>  auxMapEmp = null;
-            try
-            {
-                Connection con = db.getConn();
-                Statement statement = con.createStatement();
 
-                //Probamos a realizar unha consulta
-                ResultSet rs = statement.executeQuery("select * from EMPLEADO");
-                auxMapEmp = mapEmp;
-                mapEmp.clear();
+    /**
+     * * ... METODOS PRIVATE ...    **
+     */
+    //      ==== OPERACIONES LECTURA  SOBRE DB ======== \\
+    /**
+     * ************************************************************
+     * cargar{Name} instancia un mapa de objeto a partir de un consulta en la dB
+     * cargarEmpleados() => mapEmp cargarClientes => mapCli cargarProductos =>
+     * mapProd cargarTiendas => mapTienda =================== op{Name} = false
+     * --> Los datos no se han modificado desde la ultima carga en memoria
+     ***************************************************************
+     */
+    private void cargarEmpleados() {
+        HashMap<String, Empleado> auxMapEmp = null;
+        try {
+            Connection con = db.getConn();
+            Statement statement = con.createStatement();
+
+            //Probamos a realizar unha consulta
+            ResultSet rs = statement.executeQuery("select * from EMPLEADO");
+            auxMapEmp = mapEmp;
+            mapEmp.clear();
 //                mapEmp=null;
-                while(rs.next()){
-                       Empleado em = new Empleado( 
-                                rs.getString("EMPLEADO_name"),
-                                rs.getString("EMPLEADO_apellido")
-                            );
-                            em.setId(rs.getInt("EMPLEADO_id"));  
-                    mapEmp.put(em.getName(),em);   
-                }
-            }catch(SQLException e){
-                System.err.println(e.getMessage());
-            }finally{
-                opEmp = false;    
-                DB_driver.finishDB();
+            while (rs.next()) {
+                Empleado em = new Empleado(
+                        rs.getString("EMPLEADO_name"),
+                        rs.getString("EMPLEADO_apellido")
+                );
+                em.setId(rs.getInt("EMPLEADO_id"));
+                mapEmp.put(em.getName(), em);
+            }
+        } catch (SQLException e) {
+            System.err.println(e.getMessage());
+        } finally {
+            opEmp = false;
+            DB_driver.finishDB();
 //                if (mapTienda.isEmpty()){ // si no se cargan nuevos datos
 //                        mapEmp=auxMapEmp;
 //                        System.out.println(" Error no se han cargado datos en la tienda");
 //                    } 
-            }
         }
-    
+    }
+
     private void cargarClientes() {
-        HashMap<String, Cliente>  auxMapCli = null;
-            try
-            {
-                Connection con = db.getConn();
-                Statement statement = con.createStatement();
-                //Probamos a realizar unha consulta
-                ResultSet rs = statement.executeQuery("select * from CLIENTE");
-                auxMapCli=mapCli;
-                mapCli.clear();
-                while(rs.next()){
-                
-                        Cliente c = new Cliente( 
-                                rs.getString("CLIENTE_name"),
-                                rs.getString("CLIENTE_apellido"),
-                                rs.getString("CLIENTE_email")
-                            );
-                           c.setId(rs.getInt("CLIENTE_id"));
-                        mapCli.put(c.getName(),c);
-                }
+        HashMap<String, Cliente> auxMapCli = null;
+        try {
+            Connection con = db.getConn();
+            Statement statement = con.createStatement();
+            //Probamos a realizar unha consulta
+            ResultSet rs = statement.executeQuery("select * from CLIENTE");
+            auxMapCli = mapCli;
+            mapCli.clear();
+            while (rs.next()) {
+
+                Cliente c = new Cliente(
+                        rs.getString("CLIENTE_name"),
+                        rs.getString("CLIENTE_apellido"),
+                        rs.getString("CLIENTE_email")
+                );
+                c.setId(rs.getInt("CLIENTE_id"));
+                mapCli.put(c.getName(), c);
             }
-            catch(SQLException e){
-                System.err.println(e.getMessage());
-            }finally{
-                DB_driver.finishDB();
-                opCli = false;
+        } catch (SQLException e) {
+            System.err.println(e.getMessage());
+        } finally {
+            DB_driver.finishDB();
+            opCli = false;
 //                if (mapTienda.isEmpty()){ // si no se cargan nuevos datos
 //                        mapCli=auxMapCli;
 //                        System.out.println(" Error no se han cargado datos en la tienda");
 //                    } 
-            }
         }
-    
+    }
+
     protected void cargarProductos() {
-        HashMap<String, Producto>  auxMapProd = null;   
-        try
-            {
-                Connection con = db.getConn();
-                Statement statement = con.createStatement();
-                //Probamos a realizar unha consulta
-                ResultSet rs = statement.executeQuery("select * from PRODUCTO");
-                auxMapProd= mapProd;// por seguridad guardamos los datos del roducto
-                mapProd.clear();
+        HashMap<String, Producto> auxMapProd = null;
+        try {
+            Connection con = db.getConn();
+            Statement statement = con.createStatement();
+            //Probamos a realizar unha consulta
+            ResultSet rs = statement.executeQuery("select * from PRODUCTO");
+            auxMapProd = mapProd;// por seguridad guardamos los datos del roducto
+            mapProd.clear();
 //                mapProd=null;
-                while(rs.next()){
-               
-                        Producto p = new Producto( 
-                                rs.getString("PRODUCTO_name"),
-                                rs.getFloat("PRODUCTO_price"),
-                                rs.getString("PRODUCTO_description")
-                        );
-                        p.setId(rs.getInt("PRODUCTO_id"));
-                        mapProd.put(p.getName(),p);
-                }
+            while (rs.next()) {
+
+                Producto p = new Producto(
+                        rs.getString("PRODUCTO_name"),
+                        rs.getFloat("PRODUCTO_price"),
+                        rs.getString("PRODUCTO_description")
+                );
+                p.setId(rs.getInt("PRODUCTO_id"));
+                mapProd.put(p.getName(), p);
             }
-            catch(SQLException e){
-                System.err.println(e.getMessage());
-            }finally{
+        } catch (SQLException e) {
+            System.err.println(e.getMessage());
+        } finally {
             DB_driver.finishDB();
             opProd = false;
 //            if (mapProd.isEmpty()){// si no se cargan nuevos datos
 //                mapProd=auxMapProd;
 //                 System.out.println(" Error no se han cargado datos en el producto");
 //            }
-            }
         }
-        
+    }
+
     private void cargarTiendas() {
-        HashMap<String, Tienda>  auxMapTienda = null;
-            try
-            {
-                Connection con = db.getConn();
-                Statement statement = con.createStatement();
-                //Probamos a realizar unha consulta
-                ResultSet rs = statement.executeQuery("select * from TIENDA");
-                auxMapTienda= mapTienda; // por seguridad guardamos los datos de la tienda
-                mapTienda.clear();
+        HashMap<String, Tienda> auxMapTienda = null;
+        try {
+            Connection con = db.getConn();
+            Statement statement = con.createStatement();
+            //Probamos a realizar unha consulta
+            ResultSet rs = statement.executeQuery("select * from TIENDA");
+            auxMapTienda = mapTienda; // por seguridad guardamos los datos de la tienda
+            mapTienda.clear();
 //                mapTienda=null;
-                while(rs.next()){
-                
-                        Tienda t = new Tienda( 
-                                rs.getString("TIENDA_name"),
-                                rs.getString("TIENDA_provincia"),
-                                rs.getString("TIENDA_ciudad")
-                            );
-                        t.setId(rs.getInt("TIENDA_id"));
-                       mapTienda.put(t.getName(),t );
-                } 
+            while (rs.next()) {
+
+                Tienda t = new Tienda(
+                        rs.getString("TIENDA_name"),
+                        rs.getString("TIENDA_provincia"),
+                        rs.getString("TIENDA_ciudad")
+                );
+                t.setId(rs.getInt("TIENDA_id"));
+                mapTienda.put(t.getName(), t);
             }
-            catch(SQLException e){
-                System.err.println(e.getMessage());
-            }finally{
-                DB_driver.finishDB();
-                opTi=false;
+        } catch (SQLException e) {
+            System.err.println(e.getMessage());
+        } finally {
+            DB_driver.finishDB();
+            opTi = false;
 //                if (mapTienda.isEmpty()){ // si no se cargan nuevos datos
 //                    mapTienda=auxMapTienda;
 //                    System.out.println(" Error no se han cargado datos en la tienda");
 //                } 
-            }
-            
-    }       
-    
-     //      ==== OPERACIONES ESCRITURA SOBRE DB ======== \\
- /**************************************************************
-     *   ==========      INSERT   =================== 
-     * insert{Name} llama a el drive pasandole un objeto 
-     *                      el drive --> Escribe el objeto en la dB  
-     *  insertEmpleados()   =>   Escribe un Empleado
-     *  insertClientes      =>   Escribe un Cliente
-     *  insertProductos     =>   Escribe un Producto
-     *  insertTiendas       =>   Escribe una Tienda
-     * ===================
-     * op{Name} = true --> Los datos se han modificado desde la ultima carga en memoria
-     ****************************************************************/ 
+        }
 
-    private void insertTienda(Tienda t){
-    db.insertTienda(t);
-    opTi=true;
     }
-    private void insertProducto( Producto p){
-    db.insertProducto(p);
-    opProd=true;
+
+    //      ==== OPERACIONES ESCRITURA SOBRE DB ======== \\
+    /**
+     * ************************************************************
+     * ========== INSERT =================== insert{Name} llama a el drive
+     * pasandole un objeto el drive --> Escribe el objeto en la dB
+     * insertEmpleados() => Escribe un Empleado insertClientes => Escribe un
+     * Cliente insertProductos => Escribe un Producto insertTiendas => Escribe
+     * una Tienda =================== op{Name} = true --> Los datos se han
+     * modificado desde la ultima carga en memoria
+     ***************************************************************
+     */
+    private void insertTienda(Tienda t) {
+        db.insertTienda(t);
+        opTi = true;
     }
-    private void insertEmpleado(Empleado em){
-    db.insertEmpleado(em);
-    opEmp=true;
+
+    private void insertProducto(Producto p) {
+        db.insertProducto(p);
+        opProd = true;
     }
-    private void insertCliente(Cliente cli){
-    db.insertCliente(cli);
-    opCli=true;
+
+    private void insertEmpleado(Empleado em) {
+        db.insertEmpleado(em);
+        opEmp = true;
     }
-     /**************************************************************
-     *   ==========      DELETE   =================== 
-     * delete{Name} llama a el drive pasandole un objeto 
-     *                      el drive --> borra los registros de ese objeto en la dB  
-     *  deleteEmpleado   =>   Escribe un Empleado
-     *  deleteCliente      =>   Escribe un Cliente
-     *  deleteProducto    =>   Escribe un Producto
-     *  deleteTienda       =>   Escribe una Tienda
-     * ===================
-     * op{Name} = true --> Los datos se han modificado desde la ultima carga en memoria
-     ****************************************************************/ 
-    private void deleteTienda(Tienda t){
-    db.deleteTienda(t);
-    opTi=true;
+
+    private void insertCliente(Cliente cli) {
+        db.insertCliente(cli);
+        opCli = true;
     }
-    private void deleteProducto( Producto p){
-    db.deleteProducto(p);
-    opProd=true;
+
+    /**
+     * ************************************************************
+     * ========== DELETE =================== delete{Name} llama a el drive
+     * pasandole un objeto el drive --> borra los registros de ese objeto en la
+     * dB deleteEmpleado => Escribe un Empleado deleteCliente => Escribe un
+     * Cliente deleteProducto => Escribe un Producto deleteTienda => Escribe una
+     * Tienda =================== op{Name} = true --> Los datos se han
+     * modificado desde la ultima carga en memoria
+     ***************************************************************
+     */
+    private void deleteTienda(Tienda t) {
+        db.deleteTienda(t);
+        opTi = true;
     }
-    private void deleteEmpleado(Empleado em){
-    db.deleteEmpleado(em);
-    opEmp=true;
+
+    private void deleteProducto(Producto p) {
+        db.deleteProducto(p);
+        opProd = true;
     }
-    private void deleteCliente(Cliente cli){
-    db.deleteCliente(cli);
-    opCli=true;
+
+    private void deleteEmpleado(Empleado em) {
+        db.deleteEmpleado(em);
+        opEmp = true;
+    }
+
+    private void deleteCliente(Cliente cli) {
+        db.deleteCliente(cli);
+        opCli = true;
     }
 }

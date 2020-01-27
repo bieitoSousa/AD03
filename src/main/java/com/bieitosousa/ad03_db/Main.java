@@ -122,37 +122,36 @@ public class Main {
                         }
                         break;
                     case 5: // 5. - Engadir un producto a franquicia. 
-                       s = true;
+                        s = true;
                         while (s) {
                             System.out.println("[para salir escribe exit] Creando un Producto dime: .\n");
                             String nom = HelpFunctions.inputString("nombre ? ");
                             float prec = HelpFunctions.inputFloat("precio ? ");
-                             String des = HelpFunctions.inputString("descripcion ? ");
-                            if (HelpFunctions.whiteSpace(nom) ) {
-                                f.addProducto(new Producto(nom,prec,des));
+                            String des = HelpFunctions.inputString("descripcion ? ");
+                            if (HelpFunctions.whiteSpace(nom)) {
+                                f.addProducto(new Producto(nom, prec, des));
                                 System.out.print("Se a creado un producto:\n" + f.getMapProd().get(nom).toString());
                                 s = false;
-                            } else if ("exit".equals(nom) ) {
+                            } else if ("exit".equals(nom)) {
                                 s = false;
                             }
                         }
-                        
-                        
+
                         break;
                     case 6: // 6. - Mostrar os producto da franquicia.
                         f.viewProductos();
                         break;
                     case 7: // 7. - Engadir un producto a tenda. 
-                         s = true;
+                        s = true;
                         while (s) {
                             f.viewProductos();
                             System.out.println("[para salir escribe exit] Dime un Producto .\n");
-                             String n = HelpFunctions.inputString("nombre ? ");
-                             if ((f.getMapProd().containsKey(n))&& selectT()!=null) {
+                            String n = HelpFunctions.inputString("nombre ? ");
+                            if ((f.getMapProd().containsKey(n)) && selectT() != null) {
                                 t.addProducto(n);
                                 System.out.print("Se ha añadido un producto :\n" + t.toString());
                                 s = false;
-                            } else if ("exit".equals(n))  {
+                            } else if ("exit".equals(n)) {
                                 s = false;
                             }
                         }
@@ -163,31 +162,31 @@ public class Main {
                         while (s) {
                             f.viewProductos();
                             System.out.println("[para salir escribe exit] Dime un Producto .\n");
-                             String n = HelpFunctions.inputString("nombre ? ");
-                             int stock = HelpFunctions.inputInt("stock ? ");
-                             if ((f.getMapProd().containsKey(n))&& selectT()!=null) {
-                                t.addStock(n,stock);
+                            String n = HelpFunctions.inputString("nombre ? ");
+                            int stock = HelpFunctions.inputInt("stock ? ");
+                            if ((f.getMapProd().containsKey(n)) && selectT() != null) {
+                                t.addStock(n, stock);
                                 System.out.print("Se ha añadido un producto :\n" + t.toString());
                                 s = false;
-                            } else if ("exit".equals(n))  {
+                            } else if ("exit".equals(n)) {
                                 s = false;
                             }
                         }
-                        
+
                         break;
                     case 9: // 9. - Mostrar o stock dun producto dunha tenda.
-                        
+
                         t.viewProductos();
                         s = true;
                         while (s) {
                             f.viewProductos();
                             System.out.println("[para salir escribe exit] Dime un Producto .\n");
-                             String n = HelpFunctions.inputString("nombre ? ");
-                             if ((f.getMapProd().containsKey(n))&& selectT()!=null) {
+                            String n = HelpFunctions.inputString("nombre ? ");
+                            if ((f.getMapProd().containsKey(n)) && selectT() != null) {
                                 t.viewProductos(n);
                                 System.out.print("Se ha añadido un producto :\n" + t.toString());
                                 s = false;
-                            } else if ("exit".equals(n))  {
+                            } else if ("exit".equals(n)) {
                                 s = false;
                             }
                         }
@@ -224,16 +223,16 @@ public class Main {
                         }
                         break;
                     case 12: // 12. - Engadir un empregado a Franquicia.  
-                         s = true;
+                        s = true;
                         while (s) {
                             System.out.println("[para salir escribe exit] Creando un Empleado dime: .\n");
                             String nom = HelpFunctions.inputString("nombre ? ");
-                             String apel = HelpFunctions.inputString("apellidos ? ");
-                            if (HelpFunctions.whiteSpace(nom) ) {
-                                f.addEmpleado(new Empleado(nom,apel));
+                            String apel = HelpFunctions.inputString("apellidos ? ");
+                            if (HelpFunctions.whiteSpace(nom)) {
+                                f.addEmpleado(new Empleado(nom, apel));
                                 System.out.print("Se a creado un Empleado:\n" + f.getMapEmp().get(nom).toString());
                                 s = false;
-                            } else if ("exit".equals(nom) ) {
+                            } else if ("exit".equals(nom)) {
                                 s = false;
                             }
                         }
@@ -257,37 +256,37 @@ public class Main {
                         }
                         break;
                     case 15: // 15. - Engadir horas a un empregado na tenda. 
-                         s= true;
+                        s = true;
                         while (s) {
                             f.viewEmpleados();
                             System.out.println("[para salir escribe exit] Dime un Empleado .\n");
-                             String n = HelpFunctions.inputString("nombre ? ");
-                             float horas = HelpFunctions.inputFloat("numero de horas ? ");
-                             if ((f.getMapProd().containsKey(n))&& selectT()!=null) {
-                                t.addHoras(n,horas);
+                            String n = HelpFunctions.inputString("nombre ? ");
+                            float horas = HelpFunctions.inputFloat("numero de horas ? ");
+                            if ((f.getMapProd().containsKey(n)) && selectT() != null) {
+                                t.addHoras(n, horas);
                                 System.out.print("Se ha añadido un horario al empleado :\n" + n);
                                 s = false;
-                            } else if ("exit".equals(n))  {
+                            } else if ("exit".equals(n)) {
                                 s = false;
                             }
                         }
-                        
+
                         break;
                     case 16: // 16. - ver numero de horas dos empregados nunha tenda  
                         selectT().viewEmpleados();
                         break;
                     case 17: // 17. - Engadir un cliente.  
-                          s = true;
+                        s = true;
                         while (s) {
                             System.out.println("[para salir escribe exit] Creando un Cliente dime: .\n");
                             String nom = HelpFunctions.inputString("nombre ? ");
-                             String apel = HelpFunctions.inputString("apellidos ? ");
-                             String mail = HelpFunctions.inputString("email ? ");
-                            if (HelpFunctions.whiteSpace(nom) && HelpFunctions.whiteSpace(apel) && HelpFunctions.whiteSpace(mail) ) {
-                                f.addClient(new Cliente(nom,apel,mail));
+                            String apel = HelpFunctions.inputString("apellidos ? ");
+                            String mail = HelpFunctions.inputString("email ? ");
+                            if (HelpFunctions.whiteSpace(nom) && HelpFunctions.whiteSpace(apel) && HelpFunctions.whiteSpace(mail)) {
+                                f.addClient(new Cliente(nom, apel, mail));
                                 System.out.print("Se a creado un Empleado:\n" + f.getMapEmp().get(nom).toString());
                                 s = false;
-                            } else if (("exit".equals(nom))|| ("exit".equals(apel))|| ("exit".equals(mail) )) {
+                            } else if (("exit".equals(nom)) || ("exit".equals(apel)) || ("exit".equals(mail))) {
                                 s = false;
                             }
                         }
@@ -343,7 +342,7 @@ public class Main {
                     if (t == null) { // si no existe la tienda
                         if (f.getMapTienda().size() > 0) {// si el Map tiene datos
                             for (Tienda td : f.getMapTienda().values()) {
-                                t=td;
+                                t = td;
                                 return td; // me quedo con el primero
                             }
                         } else {// sino lo genero
@@ -382,7 +381,7 @@ public class Main {
         return t;
     }
 
-    public static  Tienda makeTienda() {
+    public static Tienda makeTienda() {
         Tienda td = null;
         String nom = null;
         boolean s = true;
@@ -399,7 +398,7 @@ public class Main {
                 s = false;
             }
         }
-        t= f.getMapTienda().get(nom);
+        t = f.getMapTienda().get(nom);
         return t;
     }
 

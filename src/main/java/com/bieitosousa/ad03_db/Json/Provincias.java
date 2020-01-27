@@ -30,14 +30,15 @@ import java.util.List;
  * @author bieito
  */
 public class Provincias {
-    
-private List<Provincia> provincias = null ;
 
-     public  void setProvincias(List<Provincia> provincias) {
-       this.provincias = provincias;
+    private List<Provincia> provincias = null;
+
+    public void setProvincias(List<Provincia> provincias) {
+        this.provincias = provincias;
     }
-     public List<Provincia> getProvincias() {
-       return this.provincias;
+
+    public List<Provincia> getProvincias() {
+        return this.provincias;
     }
-    
+
 }

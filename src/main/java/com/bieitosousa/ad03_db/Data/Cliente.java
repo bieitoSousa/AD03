@@ -30,10 +30,11 @@ import java.util.Objects;
  * @author bieito
  */
 public class Cliente {
-private int id;
-private String name;
-private String apellido;
-private String email;
+
+    private int id;
+    private String name;
+    private String apellido;
+    private String email;
 
     public Cliente(String name, String apellido, String email) {
         this.name = name;
@@ -104,8 +105,5 @@ private String email;
         }
         return true;
     }
-    
-   
-   
-    
+
 }
