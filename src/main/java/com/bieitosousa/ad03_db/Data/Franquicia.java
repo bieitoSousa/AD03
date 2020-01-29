@@ -27,6 +27,7 @@ import com.bieitosousa.ad03_db.Data.DB_driver;
 import com.bieitosousa.ad03_db.Data.Empleado;
 import com.bieitosousa.ad03_db.Data.Tienda;
 import com.bieitosousa.ad03_db.Data.Producto;
+import com.bieitosousa.ad03_db.Json.Provincia;
 import java.sql.Connection;
 import java.sql.ResultSet;
 import java.sql.SQLException;
@@ -44,13 +45,15 @@ public class Franquicia {
     HashMap<String, Producto> mapProd = new HashMap<String, Producto>();
     HashMap<String, Empleado> mapEmp = new HashMap<String, Empleado>();
     HashMap<String, Cliente> mapCli = new HashMap<String, Cliente>();
+    ArrayList<String> listProv = new ArrayList<String>();
     private static Franquicia f = null;
     private String name;
-    protected DB_driver db = DB_driver.instance();
+    protected DB_driver db = DB_driver.getInstance();
     protected static boolean opCli = true;//operaciones de escritura sobre Cliente
     protected static boolean opTi = true;//operaciones de escritura sobre Tienda
     protected static boolean opEmp = true;//operaciones de escritura sobre Empleado
     protected static boolean opProd = true;//operaciones de escritura sobre Producto
+    protected static boolean opProv = true;//operaciones de escritura sobre Provincias
 
     public static Franquicia getInstance() {
         if (f == null) {
@@ -90,7 +93,12 @@ public class Franquicia {
         }
         return mapTienda;
     }
-
+    public ArrayList<String> getMapProvincia() {
+        if (opProv) {
+            cargarProv();
+        }
+        return listProv;
+    }
     public HashMap<String, Producto> getMapProd() {
         if (opProd) {
             cargarProductos();
@@ -333,6 +341,39 @@ public class Franquicia {
      * --> Los datos no se han modificado desde la ultima carga en memoria
      ***************************************************************
      */
+    
+    private void cargarProv(){
+     ArrayList< String> auxListProv = null;
+        try {
+            Connection con = db.getConn();
+            Statement statement = con.createStatement();
+
+            //Probamos a realizar unha consulta
+            ResultSet rs = statement.executeQuery("select * from PROVINCIA");
+            auxListProv = listProv;
+            listProv.clear();
+//                mapEmp=null;
+            while (rs.next()) {
+                Provincia p = new Provincia(
+                        rs.getInt("PROVINCIA_id"),
+                        rs.getString("PROVINCIA_nome")
+                );
+                listProv.add(p.getId(), p.getNome());
+            }
+        } catch (SQLException e) {
+            System.err.println(e.getMessage());
+        } finally {
+            opProv = false;
+            DB_driver.finishDB();
+//                if (mapTienda.isEmpty()){ // si no se cargan nuevos datos
+//                        mapEmp=auxMapEmp;
+//                        System.out.println(" Error no se han cargado datos en la tienda");
+//                    } 
+        }
+    
+    }
+    
+    
     private void cargarEmpleados() {
         HashMap<String, Empleado> auxMapEmp = null;
         try {

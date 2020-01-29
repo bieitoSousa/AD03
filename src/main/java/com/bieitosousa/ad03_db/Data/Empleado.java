@@ -36,7 +36,7 @@ import java.util.Objects;
  */
 public class Empleado {
 
-    private DB_driver db = DB_driver.instance();
+    private DB_driver db = DB_driver.getInstance();
     private int id = -1;
     private String name;
     private String apellidos;

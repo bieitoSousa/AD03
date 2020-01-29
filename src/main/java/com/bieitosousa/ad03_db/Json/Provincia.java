@@ -23,6 +23,9 @@
  */
 package com.bieitosousa.ad03_db.Json;
 
+import com.bieitosousa.ad03_db.Data.DB_driver;
+import com.bieitosousa.ad03_db.Data.Franquicia;
+
 /**
  *
  * @author bieito
@@ -35,6 +38,7 @@ public class Provincia {
     public Provincia(int id, String nome) {
         this.id = id;
         this.nome = nome;
+        DB_driver.getInstance().insertProvincia(id,nome);
     }
 
     public int getId() {

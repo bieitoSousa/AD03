@@ -17,8 +17,12 @@ import java.util.List;
 import java.util.Map.Entry;
 
 public class JSonMake {
+    
+    public static void main(String[] args) throws Exception {
+    ReadObjJsonInFileProvincias();
+    }
 
-    static File f = new File(".\\src\\main\\java\\com\\bieitosousa\\ad03_db\\XML\\XML_tarea.xml");
+    static File f = new File(".\\src\\main\\java\\com\\bieitosousa\\ad03_db\\Json\\provincias.json");
 
     public static void setFile(File file) {
         f = file;
@@ -110,13 +114,37 @@ public class JSonMake {
         List<Provincia> provinciasList = null;
         try (Reader reader = new FileReader(f)) {
             // Convert JSON File to Java Object
+            System.out.println("1___si se lee el fichero");
             obj = gson.fromJson(reader, Provincias.class);
+            System.out.println("se crean provincias");
             provinciasList = obj.getProvincias();
-
+            System.out.println("se optiene provincia");
         } catch (IOException e) {
             e.printStackTrace();
         }
         return provinciasList;
+    }
+    
+     public static void CargarFileProvincias(File f){
+    Gson gson = new Gson();
+        Provincias obj = null;
+        List<Provincia> provinciasList = null;
+        try (Reader reader = new FileReader(f)) {
+            // Convert JSON File to Java Object
+            System.out.println("1___si se lee el fichero");
+            obj = gson.fromJson(reader, Provincias.class);
+            System.out.println("se crean provincias");
+            provinciasList = obj.getProvincias();
+            System.out.println("se optiene provincia");
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
+        if(provinciasList.size()>0){
+            System.out.println("provincias generadas con exito");
+            
+        }else{
+            System.out.println("fallo al cargar las provincias");
+        }
     }
 
 //public static Compania ReadObjJsonInFileCompania( File objectFile){

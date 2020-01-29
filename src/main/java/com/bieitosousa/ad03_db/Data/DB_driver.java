@@ -8,6 +8,7 @@ package com.bieitosousa.ad03_db.Data;
 import com.bieitosousa.ad03_db.Data.Empleado;
 import com.bieitosousa.ad03_db.Data.Tienda;
 import com.bieitosousa.ad03_db.Data.Producto;
+import com.bieitosousa.ad03_db.Json.JSonMake;
 import java.io.File;
 import java.sql.Connection;
 import java.sql.DatabaseMetaData;
@@ -32,8 +33,14 @@ public class DB_driver {
 
     protected File dbHome;
     public static Connection con = null;
-    public static DB_driver db = null;
+    private static DB_driver db = null;
     private static String[] DBsql = {
+        
+        "CREATE TABLE IF NOT EXISTS PROVINCIA (\n"
+        + "   PROVINCIA_id INTEGER PRIMARY KEY UNIQUE,\n"
+        + "   PROVINCIA_name TEXT NOT NULL UNIQUE \n"
+        + ");",
+        
         "CREATE TABLE IF NOT EXISTS TIENDA (\n"
         + "   TIENDA_id INTEGER PRIMARY KEY AUTOINCREMENT,\n"
         + "   TIENDA_name TEXT NOT NULL UNIQUE,\n"
@@ -56,8 +63,8 @@ public class DB_driver {
          "CREATE TABLE IF NOT EXISTS PRODUCTO (\n"
         + "    PRODUCTO_id INTEGER PRIMARY KEY AUTOINCREMENT,\n"
         + "    PRODUCTO_name TEXT NOT NULL,\n"
-        + "	   PRODUCTO_price REAL NOT NULL UNIQUE,\n"
-        + "    PRODUCTO_description TEXT NOT NULL UNIQUE\n"
+        + "	   PRODUCTO_price REAL NOT NULL ,\n"
+        + "    PRODUCTO_description TEXT NOT NULL \n"
         + ");",
 
          "CREATE TABLE IF NOT EXISTS TIENDA_EMPLEADO(\n"
@@ -169,7 +176,7 @@ public class DB_driver {
      *
      **********************************************************
      */
-    protected static DB_driver instance() {
+    public static DB_driver getInstance() {
         if (db == null) {
             db = new DB_driver();
             getData();
@@ -183,6 +190,7 @@ public class DB_driver {
             for (int i = 0; i < DBsql.length; i++) {
                 createTable(getConn(), DBsql[i]);
             }
+        JSonMake.CargarFileProvincias(new File(".\\src\\main\\java\\com\\bieitosousa\\ad03_db\\Json\\provincias.json"));    
         }
     }
 
@@ -271,6 +279,11 @@ public class DB_driver {
      *
      **********************************************************
      */
+    public  void insertProvincia(int id, String name) {
+        insertProvincia(getConn(),id, name);
+    }
+    
+    
     public void insertTienda(Tienda t) {
         insertTienda(getConn(), t.getName(), t.getProvincia(), t.getCiudad());
     }
@@ -346,6 +359,23 @@ public class DB_driver {
      *
      **********************************************************
      */
+    private void insertProvincia(Connection con,int id, String name) {
+        try {
+            //Fixate que no código SQL o valor do nome e "?". Este valor engadiremolo despois
+            String sql = "INSERT INTO TIENDA(PROVINCIA_id, PROVINCIA_name) VALUES(?,?)";
+            PreparedStatement pstmt = con.prepareStatement(sql);
+
+            //Aquí e cando engadimos o valor do nome
+            pstmt.setInt(1, id);
+            pstmt.setString(2, name);
+            pstmt.executeUpdate();
+            System.out.println(" Provincia" + "[" + id + "," + name + "]");
+        } catch (SQLException e) {
+            System.out.println(e.getMessage() + "ERROR EN INSERT {{ Provincia" + "[" + id + "," + name + "] }}");
+        } finally {
+            DB_driver.finishDB();
+        }
+    }
     private void insertTienda(Connection con, String name, String provincia, String ciudad) {
         try {
             //Fixate que no código SQL o valor do nome e "?". Este valor engadiremolo despois

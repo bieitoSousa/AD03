@@ -36,7 +36,7 @@ import java.util.Objects;
  */
 public class Producto {
 
-    private DB_driver db = DB_driver.instance();
+    private DB_driver db = DB_driver.getInstance();
     private int stock;
     private int id = -1;
     private String name;
