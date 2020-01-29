@@ -222,6 +222,21 @@ public class Tienda {
         }
     }
 
+    public void addProducto(String name, int stock) {
+        Producto p = getFranquicia().getMapProd().get(name);
+        if (p != null) {
+            if (p.getStock(this) == -1) {
+                insertTiendaProducto(p, stock);
+            }else if (p.getStock(this) >= 0) {
+                updateTiendaProducto(p, stock);
+             }else{
+                     System.out.println("producto no existe en la db");
+                     }
+        } else {
+            System.out.println("Producto " + name + " No es parte de la Franquicia");
+        }
+    }
+    
     public void addEmpleado(Empleado em) {
         if (getFranquicia().getMapEmp().get(em.getName()) != null) {
             if (em.getnHoras(this) == (float) -1) {
@@ -266,7 +281,9 @@ public class Tienda {
             if (em.getnHoras(this) >= 0 && nHoras > (float) 0) {
                 nHoras = nHoras + em.getnHoras(this);
                 updateTiendaEmpleado(em, nHoras);
-            } else {
+            } else if(em.getnHoras(this)==-1){
+               insertTiendaEmpleado(em, nHoras);
+            }else{ 
                 System.out.println("El empleado NO HA SIDO CREEADO o las horas deven de ser > a 0 ");
             }
         } else {
@@ -357,30 +374,48 @@ public class Tienda {
      */
     public void viewProductos() {
         if (opStock) {
-            cargarProductos();
+            if(cargarProductos()){
             System.out.println("Cargando PRODUCTOS [........]");
+            }else{
+                System.out.println("NO HA SIDO POSIBLE CARGAR LOS PRODUCTOS");
+            }
         }
         System.out.println("_____________ FRANQUICIA : " + this.name + " PRODUCTOS _____________");
         for (Producto p : mapProd.values()) {
-            System.out.println(p.toString(this));
+             System.out.println(""
+                    + "Tienda ["+ this.name+"]"
+                    + "Producto ["+ getMapProd().get(p.getName()).getName() +"]"
+                    + "==>  Strock [ "+String.valueOf( getMapProd().get(p.getName()).getStock(this))
+            );
         }
         System.out.println("===================================");
     }
 
     public void viewProductos(String n) {
         if (opStock) {
-            cargarProductos();
-            System.out.println("Cargando PRODUCTOS [........]");
+            if(cargarProductos()){
+                
+            }else {
+                System.out.println("NO HA SIDO PISBLE CARGAR LOS PRODUCTOS");
+            }
+            //System.out.println("el producto esta "+getMapProd().containsKey(n));
         }
+        if (getMapProd().containsKey(n)){
         System.out.println("_____________ FRANQUICIA : " + this.name + " PRODUCTOS _____________");
-        System.out.println(mapProd.get(n).toString(this));
+            System.out.println(""
+                    + "Tienda ["+ this.name+"]"
+                    + "Producto ["+ getMapProd().get(n).getName() +"]"
+                    + "==>  Strock [ "+String.valueOf( getMapProd().get(n).getStock(this)+"]")
+            );
         System.out.println("===================================");
+        }else System.out.println("no se ha encontrado el producto : "+n);
     }
 
     public void viewEmpleados() {
         if (opHoras) {
-            cargarEmpleados();
+            if(cargarEmpleados()){
             System.out.println("Cargando EMPLEADOS [........]");
+            }else{System.out.println("NO HA SIDO POSIBLE CARGAR LOS EMPLEADOS");}
         }
         System.out.println("_____________ FRANQUICIA : " + this.name + " EMPLEADOS _____________");
         for (Empleado em : mapEmp.values()) {
@@ -395,7 +430,7 @@ public class Tienda {
      * = getTiendaId --> Recupera el id del Objeto : con una consulta en la DB  
      ***************************************************************
      */
-    private void cargarId() {
+    private boolean cargarId() {
         int tID = -1;
         try {
             Connection con = getFranquicia().db.getConn();
@@ -407,13 +442,16 @@ public class Tienda {
             }
             this.id = tID;
         } catch (SQLException e) {
-            System.err.println(e.getMessage());
+            System.err.println(e.getMessage()); return false;
+        } catch (Exception ee){
+            return false;
         } finally {
             DB_driver.finishDB();
         }
+        return true;
     }
 
-    private void cargarEmpleados() {
+    private boolean cargarEmpleados() {
 
         try {
             DB_driver.finishDB();
@@ -443,16 +481,18 @@ public class Tienda {
                 mapEmp.put(em.getName(), em);
             }
         } catch (SQLException e) {
-            System.err.println(e.getMessage());
+            System.err.println(e.getMessage()); return false;
+        } catch (Exception ee){
+            return false;
         } finally {
 
             DB_driver.finishDB();
         }
-
+return true;
     }
 
-    private void cargarProductos() {
-
+    private boolean cargarProductos() {
+ System.out.println("Cargando PRODUCTOS [........]");
         try {
             Connection con = getFranquicia().db.getConn();
             Statement statement = con.createStatement();
@@ -483,10 +523,13 @@ public class Tienda {
             }
         } catch (SQLException e) {
             System.err.println(e.getMessage());
+             return false;
+        } catch (Exception ee){
+            return false;
         } finally {
             DB_driver.finishDB();
         }
-
+return true;
     }
 
     //      ==== OPERACIONES ESCRITURA  SOBRE DB ======== \\
@@ -526,35 +569,42 @@ public class Tienda {
 //        }
 //    }
     private void insertTiendaEmpleado(Empleado em, float nHoras) {
-
-        getFranquicia().db.insertTiendaEmpleado(this.getId(), em.getId(), 0);
+        if (nHoras== -1) nHoras=0;
+        if(getFranquicia().db.insertTiendaEmpleado(this.getId(), em.getId(), nHoras))
         this.opHoras = true;
+        else System.out.println("No se a podido insertar las horas "+String.valueOf(nHoras)+" En el Empleado "+em.getName()); 
     }
 
     private void insertTiendaProducto(Producto p, int stock) {
 
-        getFranquicia().db.insertTiendaProducto(this.getId(), p.getId(), stock);
-        this.opStock = true;
+        if(getFranquicia().db.insertTiendaProducto(this.getId(), p.getId(), stock) )
+            this.opStock = true;
+        else System.out.println("No se a podido insertar el stock "+String.valueOf(stock)+" En el Empleado "+p.getName());
     }
 
     private void updateTiendaEmpleado(Empleado em, float nHoras) {
-        getFranquicia().db.updateTiendaEmpleado(this.getId(), em.getId(), nHoras);
+        if(getFranquicia().db.updateTiendaEmpleado(this.getId(), em.getId(), nHoras))
         this.opHoras = true;
+        else System.out.println("No se a podido insertar las horas "+String.valueOf(nHoras)+" En el Empleado "+em.getName());
     }
 
     private void updateTiendaProducto(Producto p, int stock) {
-        getFranquicia().db.updateTiendaProducto(this.getId(), p.getId(), stock);
-        this.opStock = true;
+        if(getFranquicia().db.updateTiendaProducto(this.getId(), p.getId(), stock) )
+            this.opStock = true;
+        else System.out.println("No se a podido insertar el stock "+String.valueOf(stock)+" En el Empleado "+p.getName());
     }
 
     private void deleteTiendaProducto(Tienda t, Producto p) {
-        getFranquicia().db.deleteTiendaProducto(t, p);
+        if(getFranquicia().db.deleteTiendaProducto(t, p))
         this.opStock = true;
+        else System.out.println("No se a podido eliminar el Producto "+p.getName());
     }
 
     private void deleteTiendaEmpleado(Tienda t, Empleado em) {
-        getFranquicia().db.deleteTiendaEmpleado(t, em);
-        this.opHoras = true;
+       if( getFranquicia().db.deleteTiendaEmpleado(t, em))
+       this.opHoras = true;
+       else System.out.println("No se a podido eleminar el empleado "+em);
+        
     }
 
 }

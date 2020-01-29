@@ -102,9 +102,7 @@ public class Producto {
         return "Producto{ id=" + id + "name=" + name + ", price=" + price + ", description=" + description + '}';
     }
 
-    public String toString(Tienda t) {
-        return "Producto{" + "stock=" + getStock(t) + ", id=" + id + ", name=" + name + ", price=" + price + ", description=" + description + '}';
-    }
+ 
 
     @Override
     public int hashCode() {
@@ -172,4 +170,6 @@ public class Producto {
             DB_driver.finishDB();
         }
     }
+
+    
 }

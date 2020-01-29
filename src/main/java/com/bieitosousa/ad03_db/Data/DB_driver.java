@@ -241,28 +241,28 @@ public class DB_driver {
      *
      **********************************************************
      */
-    public void deleteTienda(Tienda t) {
-        deleteTienda(getConn(), t.getName());
+    public boolean deleteTienda(Tienda t) {
+        return deleteTienda(getConn(), t.getName());
     }
 
-    public void deleteProducto(Producto p) {
-        deleteProducto(getConn(), p.getName());
+    public boolean deleteProducto(Producto p) {
+        return deleteProducto(getConn(), p.getName());
     }
 
-    public void deleteEmpleado(Empleado em) {
-        deleteEmpleado(getConn(), em.getName());
+    public boolean deleteEmpleado(Empleado em) {
+        return deleteEmpleado(getConn(), em.getName());
     }
 
-    public void deleteCliente(Cliente cli) {
-        deleteCliente(getConn(), cli.getName());
+    public boolean deleteCliente(Cliente cli) {
+        return deleteCliente(getConn(), cli.getName());
     }
 
-    public void deleteTiendaProducto(Tienda t, Producto p) {
-        deleteTiendaProducto(getConn(), t.getId(), p.getId());
+    public boolean deleteTiendaProducto(Tienda t, Producto p) {
+        return deleteTiendaProducto(getConn(), t.getId(), p.getId());
     }
 
-    public void deleteTiendaEmpleado(Tienda t, Empleado em) {
-        deleteTiendaEmpleado(getConn(), t.getId(), em.getId());
+    public boolean deleteTiendaEmpleado(Tienda t, Empleado em) {
+        return deleteTiendaEmpleado(getConn(), t.getId(), em.getId());
     }
 
     /**
@@ -279,45 +279,44 @@ public class DB_driver {
      *
      **********************************************************
      */
-    public  void insertProvincia(int id, String name) {
-        insertProvincia(getConn(),id, name);
+    public  boolean insertProvincia(int id, String name) {
+        return insertProvincia(getConn(),id, name);
     }
     
     
-    public void insertTienda(Tienda t) {
-        insertTienda(getConn(), t.getName(), t.getProvincia(), t.getCiudad());
+    public boolean insertTienda(Tienda t) {
+        return insertTienda(getConn(), t.getName(), t.getProvincia(), t.getCiudad());
     }
 
-    public void insertCliente(Cliente c) {
-        insertCliente(getConn(), c.getName(), c.getApellido(), c.getEmail());
+    public boolean insertCliente(Cliente c) {
+        return insertCliente(getConn(), c.getName(), c.getApellido(), c.getEmail());
     }
 
-    public void insertEmpleado(Empleado e) {
-        insertEmpleado(getConn(), e.getName(), e.getApellidos());
+    public boolean insertEmpleado(Empleado e) {
+        return insertEmpleado(getConn(), e.getName(), e.getApellidos());
     }
 
-    public void insertProducto(Producto p) {
-        insertProducto(getConn(), p.getName(), p.getPrice(), p.getDescription());
+    public boolean insertProducto(Producto p) {
+        return insertProducto(getConn(), p.getName(), p.getPrice(), p.getDescription());
     }
 
-    public void insertTiendaProducto(int id_Tienda, int id_Producto, int stock) {
-        Connection con = getConn();
-        insertTiendaProducto(con, id_Tienda, id_Producto, stock);
+    public boolean insertTiendaProducto(int id_Tienda, int id_Producto, int stock) {
+        
+        return insertTiendaProducto(getConn(), id_Tienda, id_Producto, stock);
     }
 
-    public void insertTiendaProducto(int id_Tienda, int id_Producto) {
-        Connection con = getConn();
-        insertTiendaProducto(con, id_Tienda, id_Producto);
+    public boolean insertTiendaProducto(int id_Tienda, int id_Producto) {
+   
+        return insertTiendaProducto(getConn(), id_Tienda, id_Producto);
     }
 
-    public void insertTiendaEmpleado(int idTienda, int idEmpleado, float nHoras) {
-        Connection con = getConn();
-        insertTiendaEmpleado(con, idTienda, idEmpleado, nHoras);
+    public boolean insertTiendaEmpleado(int idTienda, int idEmpleado, float nHoras) {
+        
+        return insertTiendaEmpleado(getConn(), idTienda, idEmpleado, nHoras);
     }
 
-    public void insertTiendaEmpleado(int idTienda, int idEmpleado) {
-        Connection con = getConn();
-        insertTiendaEmpleado(con, idTienda, idEmpleado);
+    public boolean insertTiendaEmpleado(int idTienda, int idEmpleado) {
+        return insertTiendaEmpleado(getConn(), idTienda, idEmpleado);
     }
 
     /**
@@ -327,24 +326,24 @@ public class DB_driver {
      * el registro de stock    
      ***************************************************************
      */
-    public void updateTiendaEmpleado(Tienda t, Empleado em, float nHoras) {
-        updateTiendaEmpleado(con, t.getId(), em.getId(), nHoras);
+    public boolean updateTiendaEmpleado(Tienda t, Empleado em, float nHoras) {
+        return updateTiendaEmpleado(getConn(), t.getId(), em.getId(), nHoras);
     }
 
-    public void updateTiendaEmpleado(int idt, int idem, float nHoras) {
-        updateTiendaEmpleado(con, idt, idem, nHoras);
+    public boolean updateTiendaEmpleado(int idt, int idem, float nHoras) {
+        return updateTiendaEmpleado(getConn(), idt, idem, nHoras);
     }
 
-    public void updateTiendaProducto(Tienda t, Producto p, int stock) {
-        updateTiendaProducto(con, t.getId(), p.getId(), stock);
+    public boolean updateTiendaProducto(Tienda t, Producto p, int stock) {
+        return updateTiendaProducto(getConn(), t.getId(), p.getId(), stock);
     }
 
-    public void updateTiendaProducto(int idt, int idp, int stock) {
-        updateTiendaProducto(con, idt, idp, stock);
+    public boolean updateTiendaProducto(int idt, int idp, int stock) {
+       return updateTiendaProducto(getConn(), idt, idp, stock);
     }
 
-    public void insertCliente(Tienda t, Cliente c, int stock) {
-        updateTiendaProducto(con, t.getId(), c.getId(), stock);
+    public boolean insertCliente(Tienda t, Cliente c, int stock) throws SQLException {
+       return updateTiendaProducto(getConn(), t.getId(), c.getId(), stock);
     }
 
     /**
@@ -359,7 +358,7 @@ public class DB_driver {
      *
      **********************************************************
      */
-    private void insertProvincia(Connection con,int id, String name) {
+    private boolean insertProvincia(Connection con,int id, String name) {
         try {
             //Fixate que no código SQL o valor do nome e "?". Este valor engadiremolo despois
             String sql = "INSERT INTO TIENDA(PROVINCIA_id, PROVINCIA_name) VALUES(?,?)";
@@ -372,11 +371,15 @@ public class DB_driver {
             System.out.println(" Provincia" + "[" + id + "," + name + "]");
         } catch (SQLException e) {
             System.out.println(e.getMessage() + "ERROR EN INSERT {{ Provincia" + "[" + id + "," + name + "] }}");
+             return false;
+        } catch (Exception ee){
+            return false;
         } finally {
             DB_driver.finishDB();
         }
+        return true;
     }
-    private void insertTienda(Connection con, String name, String provincia, String ciudad) {
+    private boolean insertTienda(Connection con, String name, String provincia, String ciudad) {
         try {
             //Fixate que no código SQL o valor do nome e "?". Este valor engadiremolo despois
             String sql = "INSERT INTO TIENDA(TIENDA_name, TIENDA_provincia, TIENDA_ciudad) VALUES(?,?,?)";
@@ -390,12 +393,16 @@ public class DB_driver {
             System.out.println(" Tienda" + "[" + name + "," + provincia + "," + ciudad + "]");
         } catch (SQLException e) {
             System.out.println(e.getMessage() + "ERROR EN INSERT {{ Tienda" + "[" + name + "," + provincia + "," + ciudad + "] }}");
+             return false;
+        } catch (Exception ee){
+            return false;
         } finally {
             DB_driver.finishDB();
         }
+        return true;
     }
 
-    private void insertCliente(Connection con, String name, String apellido, String email) {
+    private boolean insertCliente(Connection con, String name, String apellido, String email) {
         try {
             //Fixate que no código SQL o valor do nome e "?". Este valor engadiremolo despois
             String sql = "INSERT INTO CLIENTE(CLIENTE_name, CLIENTE_apellido, CLIENTE_email) VALUES(?,?,?)";
@@ -408,12 +415,16 @@ public class DB_driver {
             System.out.println(" Cliente" + "[" + name + "," + apellido + "," + email + "]");
         } catch (SQLException e) {
             System.out.println(e.getMessage() + "ERROR EN INSERT {{ Cliente" + "[" + name + "," + apellido + "," + email + "]}}");
+             return false;
+        } catch (Exception ee){
+            return false;
         } finally {
             DB_driver.finishDB();
         }
+        return true;
     }
 
-    private void insertEmpleado(Connection con, String name, String apellido) {
+    private boolean insertEmpleado(Connection con, String name, String apellido) {
         try {
             //Fixate que no código SQL o valor do nome e "?". Este valor engadiremolo despois
             String sql = "INSERT INTO EMPLEADO(EMPLEADO_name, EMPLEADO_apellido) VALUES(?,?)";
@@ -426,12 +437,16 @@ public class DB_driver {
             System.out.println("Empleado" + "[" + name + "," + apellido + "]");
         } catch (SQLException e) {
             System.out.println(e.getMessage() + " ERROR EN INSERT {{ Empleado" + "[" + name + "," + apellido + "]}}");
+             return false;
+        } catch (Exception ee){
+            return false;
         } finally {
             DB_driver.finishDB();
         }
+        return true;
     }
 
-    private void insertProducto(Connection con, String name, float price, String description) {
+    private boolean insertProducto(Connection con, String name, float price, String description) {
         try {
             //Fixate que no código SQL o valor do nome e "?". Este valor engadiremolo despois
             String sql = "INSERT INTO PRODUCTO(PRODUCTO_name, PRODUCTO_price, PRODUCTO_description) VALUES(?,?,?)";
@@ -445,12 +460,16 @@ public class DB_driver {
             System.out.println("Producto" + "[" + name + "," + price + "," + description + "]");
         } catch (SQLException e) {
             System.out.println(e.getMessage() + " ERROR EN INSERT {{ Producto" + "[" + name + "," + price + "," + description + "] }}");
+             return false;
+        } catch (Exception ee){
+            return false;
         } finally {
             DB_driver.finishDB();
         }
+        return true;
     }
 
-    private void insertTiendaProducto(Connection con, int id_Tienda, int id_Producto, int stock) {
+    private boolean insertTiendaProducto(Connection con, int id_Tienda, int id_Producto, int stock) {
         try {
             //Fixate que no código SQL o valor do nome e "?". Este valor engadiremolo despois
             String sql = "INSERT INTO TIENDA_PRODUCTO(TIENDA_id, PRODUCTO_id, stock) VALUES(?,?,?)";
@@ -464,12 +483,16 @@ public class DB_driver {
             System.out.println("Tienda ->> Producto" + "[" + stock + "]");
         } catch (SQLException e) {
             System.out.println(e.getMessage() + "ERROR INSERT {{ Tienda ->> Producto" + "[" + stock + "] }}");
+             return false;
+        } catch (Exception ee){
+            return false;
         } finally {
             DB_driver.finishDB();
         }
+        return true;
     }
 
-    private void insertTiendaProducto(Connection con, int id_Tienda, int id_Producto) {
+    private boolean insertTiendaProducto(Connection con, int id_Tienda, int id_Producto) {
         try {
             //Fixate que no código SQL o valor do nome e "?". Este valor engadiremolo despois
             String sql = "INSERT INTO TIENDA_PRODUCTO(TIENDA_id, PRODUCTO_id, stock) VALUES(?,?)";
@@ -482,12 +505,16 @@ public class DB_driver {
             System.out.println("Tienda ->> Producto" + "[" + "]");
         } catch (SQLException e) {
             System.out.println(e.getMessage() + "ERROR INSERT {{ Tienda ->> Producto" + "[" + "] }}");
+             return false;
+        } catch (Exception ee){
+            return false;
         } finally {
             DB_driver.finishDB();
         }
+        return true;
     }
 
-    private void insertTiendaEmpleado(Connection con, int idTienda, int idEmpleado, float nHoras) {
+    private boolean insertTiendaEmpleado(Connection con, int idTienda, int idEmpleado, float nHoras) {
         try {
             //Fixate que no código SQL o valor do nome e "?". Este valor engadiremolo despois
             String sql = "INSERT INTO TIENDA_EMPLEADO(TIENDA_id, EMPLEADO_id, nHoras) VALUES(?,?,?)";
@@ -501,12 +528,16 @@ public class DB_driver {
             System.out.println("Tienda ->> Empleado" + "[" + nHoras + "] ");
         } catch (SQLException e) {
             System.out.println(e.getMessage() + "ERROR INSERT {{ Tienda ->> Empleado" + "[" + nHoras + "] }}");
+             return false;
+        } catch (Exception ee){
+            return false;
         } finally {
             DB_driver.finishDB();
         }
+        return true;
     }
 
-    private void insertTiendaEmpleado(Connection con, int idTienda, int idEmpleado) {
+    private boolean insertTiendaEmpleado(Connection con, int idTienda, int idEmpleado) {
         try {
             //Fixate que no código SQL o valor do nome e "?". Este valor engadiremolo despois
             String sql = "INSERT INTO TIENDA_EMPLEADO(TIENDA_id, EMPLEADO_id) VALUES(?,?)";
@@ -518,10 +549,13 @@ public class DB_driver {
             pstmt.executeUpdate();
             System.out.println("Tienda ->> Empleado" + "[" + "]");
         } catch (SQLException e) {
-            System.out.println(e.getMessage() + "ERROR INSERT {{ Tienda ->> Empleado" + "[" + "] }}");
+            System.out.println(e.getMessage() + "ERROR INSERT {{ Tienda ->> Empleado" + "[" + "] }}"); return false;
+        } catch (Exception ee){
+            return false;
         } finally {
             DB_driver.finishDB();
         }
+        return true;
     }
 
     /**
@@ -534,7 +568,7 @@ public class DB_driver {
      *
      ***************************************************************
      */
-    private void deleteTienda(Connection con, String name) {
+    private boolean deleteTienda(Connection con, String name) {
         try {
             String sql = "DELETE FROM TIENDA WHERE TIENDA_name = ?";
             PreparedStatement pstmt = con.prepareStatement(sql);
@@ -543,12 +577,16 @@ public class DB_driver {
             System.out.println(" TIENDA [" + name + "] --> borrada con éxito");
         } catch (SQLException e) {
             System.err.println(" TIENDA [" + name + "] ERROR no se a podido borrar" + e.getMessage());
+             return false;
+        } catch (Exception ee){
+            return false;
         } finally {
             DB_driver.finishDB();
         }
+        return true;
     }
 
-    private void deleteCliente(Connection con, String name) {
+    private boolean deleteCliente(Connection con, String name) {
         try {
             String sql = "DELETE FROM CLIENTE WHERE CLIENTE_name = ?";
             PreparedStatement pstmt = con.prepareStatement(sql);
@@ -557,12 +595,16 @@ public class DB_driver {
             System.out.println("CLIENTE [" + name + "] --> borrado con éxito");
         } catch (SQLException e) {
             System.err.println(" CLIENTE [" + name + "] ERROR no se a podido borrar" + e.getMessage());
+             return false;
+        } catch (Exception ee){
+            return false;
         } finally {
             DB_driver.finishDB();
         }
+        return true;
     }
 
-    private void deleteEmpleado(Connection con, String name) {
+    private boolean deleteEmpleado(Connection con, String name) {
         try {
             String sql = "DELETE FROM EMPLEADO WHERE EMPLEADO_name = ?";
             PreparedStatement pstmt = con.prepareStatement(sql);
@@ -571,12 +613,16 @@ public class DB_driver {
             System.out.println("EMPLEADO [" + name + "] --> borrado con éxito");
         } catch (SQLException e) {
             System.err.println(" EMPLEADO [" + name + "] ERROR no se a podido borrar" + e.getMessage());
+             return false;
+        } catch (Exception ee){
+            return false;
         } finally {
             DB_driver.finishDB();
         }
+        return true;
     }
 
-    private void deleteProducto(Connection con, String name) {
+    private boolean deleteProducto(Connection con, String name) {
         try {
             String sql = "DELETE FROM PRODUCTO WHERE PRODUCTO_name = ?";
             PreparedStatement pstmt = con.prepareStatement(sql);
@@ -585,12 +631,16 @@ public class DB_driver {
             System.out.println("PRODUCTO [" + name + "] --> borrado con éxito");
         } catch (SQLException e) {
             System.err.println(" PRODUCTO [" + name + "] ERROR no se a podido borrar" + e.getMessage());
+             return false;
+        } catch (Exception ee){
+            return false;
         } finally {
             DB_driver.finishDB();
         }
+        return true;
     }
 
-    private void deleteTiendaProducto(Connection con, int idTiend, int idProd) {
+    private boolean deleteTiendaProducto(Connection con, int idTiend, int idProd) {
         try {
             String sql = "DELETE FROM TIENDA_PRODUCTO WHERE TIENDA_id = ? and PRODUCTO_id = ?";
             PreparedStatement pstmt = con.prepareStatement(sql);
@@ -600,12 +650,16 @@ public class DB_driver {
             System.out.println("TIENDA_PRODUCTO borrada con éxito");
         } catch (SQLException e) {
             System.err.println(e.getMessage());
+             return false;
+        } catch (Exception ee){
+            return false;
         } finally {
             DB_driver.finishDB();
         }
+        return true;
     }
 
-    private void deleteTiendaEmpleado(Connection con, int idTiend, int idEmp) {
+    private boolean deleteTiendaEmpleado(Connection con, int idTiend, int idEmp) {
         try {
             String sql = "DELETE FROM TIENDA_EMPLEADO WHERE TIENDA_id = ? and EMPLEADO_id = ?";
             PreparedStatement pstmt = con.prepareStatement(sql);
@@ -614,10 +668,13 @@ public class DB_driver {
             pstmt.executeUpdate();
             System.out.println("TIENDA_EMPLEADO borrada con éxito");
         } catch (SQLException e) {
-            System.err.println(e.getMessage());
+            System.err.println(e.getMessage()); return false;
+        } catch (Exception ee){
+            return false;
         } finally {
             DB_driver.finishDB();
         }
+        return true;
     }
 
     /**
@@ -628,55 +685,56 @@ public class DB_driver {
      ***************************************************************
      */
 
-    private static void updateTiendaEmpleado(Connection con, int idT, int idE, float nHoras) {
-        System.out.println("updateTiendaEmpleado IN DB  intento añadir " + nHoras);
-        String sql = "";
+    private boolean updateTiendaEmpleado(Connection con, int idT, int idE, float nHoras) {
         try {
-            sql = "UPDATE TIENDA_EMPLEADO SET nHoras = ? "
+            String sql = " UPDATE TIENDA_EMPLEADO SET nHoras = ? "
                     + " WHERE TIENDA_id = ? AND EMPLEADO_id = ? ";
-            System.out.println("sql -->>" + sql);
-            System.out.println("__0");
             PreparedStatement pstmt = con.prepareStatement(sql);
-            System.out.println("__1");
+           
             pstmt.setFloat(1, nHoras);
-            System.out.println("__2");
+            
             pstmt.setInt(2, idT);
-            System.out.println("__3");
+            
             pstmt.setInt(3, idE);
-            System.out.println("__4");
-            System.out.println("hasta aqui perfecto ?¿");
+            
+            
             pstmt.executeUpdate();
-            System.out.println("Nome da persoa actualizada con éxito");
+          
         } catch (SQLException e) {
-            System.err.println(e.getMessage() + "sql -->>" + sql);
+            System.err.println(e.getMessage() );
+             return false;
+        } catch (Exception ee){
+            return false;
         } finally {
             DB_driver.finishDB();
         }
+        return true;
     }
 
-    private static void updateTiendaProducto(Connection con, int idT, int idP, int stock) {
+    private static boolean updateTiendaProducto(Connection con, int idT, int idP, int stock) {
 
         System.out.println("updateTiendaEmpleado IN DB  intento añadir " + stock);
         String sql = "";
         try {
-            sql = "UPDATE TIENDA_PRODUCTO SET stock =? "
+            sql = " UPDATE TIENDA_PRODUCTO SET stock =? "
                     + " WHERE TIENDA_id =? and PRODUCTO_id =? ;";
-            String sql2 = "UPDATE TIENDA_PRODUCTO SET stock = " + stock
-                    + " WHERE TIENDA_id = " + idT + " and PRODUCTO_id = " + idP + " ;";
-            System.out.println("sql -->>" + sql2);
-            System.out.println("__0");
             PreparedStatement pstmt = con.prepareStatement(sql);
-            System.out.println("__1");
             pstmt.setFloat(1, stock);
-            System.out.println("__2");
             pstmt.setInt(2, idT);
             pstmt.setInt(3, idP);
             pstmt.executeUpdate();
+            pstmt.close();
             System.out.println("Nome da persoa actualizada con éxito");
         } catch (SQLException e) {
             System.err.println(e.getMessage() + "sql -->" + sql);
-        } finally {
+            return false;
+        } catch (Exception ee){
+            return false;
+        }finally {
             DB_driver.finishDB();
+            
         }
+        return true;
     }
+
 }//fin de DB_driver
