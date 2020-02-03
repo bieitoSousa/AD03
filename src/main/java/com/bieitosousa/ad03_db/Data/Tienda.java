@@ -492,7 +492,7 @@ return true;
     }
 
     private boolean cargarProductos() {
- System.out.println("Cargando PRODUCTOS [........]");
+ 
         try {
             Connection con = getFranquicia().db.getConn();
             Statement statement = con.createStatement();

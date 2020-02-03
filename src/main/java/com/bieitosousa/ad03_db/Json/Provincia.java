@@ -38,7 +38,8 @@ public class Provincia {
     public Provincia(int id, String nome) {
         this.id = id;
         this.nome = nome;
-        DB_driver.getInstance().insertProvincia(id,nome);
+       // System.out.println("Se a creado una proviencia"+id +" nombre "+ nome);
+        
     }
 
     public int getId() {
@@ -55,6 +56,16 @@ public class Provincia {
 
     public void setNome(String nome) {
         this.nome = nome;
+    }
+
+    public boolean insert() {
+       if(DB_driver.getInstance().insertProvincia(id,nome)){
+        System.out.println(" Insertando  PROVINCIA : ["+ nome +" CORRECTAMENTE");
+                        return true;
+        }else{
+        System.out.println("NO se ha insertado la provincia : "+nome);
+        return false;
+        }   
     }
 
 }

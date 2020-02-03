@@ -38,6 +38,11 @@ public class Provincias {
     }
 
     public List<Provincia> getProvincias() {
+     for (Provincia p : provincias){
+       if ( !p.insert()){
+           System.out.println("Fallo al insertar "+ p.getNome());
+       };
+        }
         return this.provincias;
     }
 

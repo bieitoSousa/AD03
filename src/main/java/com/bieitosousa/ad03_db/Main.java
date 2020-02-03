@@ -34,7 +34,7 @@ public class Main {
         while (!salir) {
             String encabezado =
                     "=====================================================================\n "
-                    + "=============================== Menu ============================== "
+                    + "=============================== Menu ==============================\n "
                     + "===================================================================\n";
             if (t != null) {
                 encabezado += "\n=  # Tienda selecionada :";
@@ -398,36 +398,29 @@ public class Main {
     }
 
 
-    private static Provincia provinciaOnList() {
-        int i = -1;
-        File fileProvincias = new File(".\\src\\main\\java\\com\\bieitosousa\\ad03_db\\Json\\provincias.json");
-        JSonMake.setFile(fileProvincias);
-        List<Provincia> pList = ReadObjJsonInFileProvincias();
-        for (Provincia p : pList) {
-            i++;
-            System.out.println("[" + i + "] ||====>>> { id =>[" + p.getId() + "] Nombre [" + p.getNome() + "] }");
-        }
-        int prov = HelpFunctions.inputInt("que provincia quieres  ? ");
-        return pList.get(prov);
-    }
+    
+    
 
     private static void menuAddTienda() {
         boolean s = true;
         String n = "";
         String c = "";
+        Provincia pro =null;
         while (s && !"exit".equals(n) && !"exit".equals(c)) {
             System.out.println("[para salir escribe exit] Creando una tienda dime: .\n");
             n = HelpFunctions.inputString("nombre ? ");
             if ("exit".equals(n)) {
                 break;
             }
-            String pro = provinciaOnList().getNome();
+             f.viewProvincias();
+             pro = f.getMapProvincias().get( HelpFunctions.inputInt("provincia ? "));
+             
             c = HelpFunctions.inputString("cidade ? ");
             if ("exit".equals(c)) {
                 break;
             }
-            if (HelpFunctions.whiteSpace(n) && HelpFunctions.whiteSpace(c) && !f.getMapTienda().containsKey(n)) {
-                f.addTienda(new Tienda(n, pro, c));
+            if (HelpFunctions.whiteSpace(n) && HelpFunctions.whiteSpace(c) && !f.getMapTienda().containsKey(n) && (pro != null)) {
+                f.addTienda(new Tienda(n, pro.getNome(), c));
                 t = f.getMapTienda().get(n);
                 if (t != null) {
                     System.out.print("Se a creado unha tenda:\n" + t.toString());

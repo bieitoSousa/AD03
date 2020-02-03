@@ -45,7 +45,7 @@ public class Franquicia {
     HashMap<String, Producto> mapProd = new HashMap<String, Producto>();
     HashMap<String, Empleado> mapEmp = new HashMap<String, Empleado>();
     HashMap<String, Cliente> mapCli = new HashMap<String, Cliente>();
-    ArrayList<String> listProv = new ArrayList<String>();
+    HashMap<Integer, Provincia> mapProv = new HashMap<Integer, Provincia>();
     private static Franquicia f = null;
     private String name;
     protected DB_driver db = DB_driver.getInstance();
@@ -93,11 +93,11 @@ public class Franquicia {
         }
         return mapTienda;
     }
-    public ArrayList<String> getMapProvincia() {
+    public HashMap<Integer, Provincia> getMapProvincias() {
         if (opProv) {
-            cargarProv();
+            if(!cargarProv())System.out.println("ERROR AL LEER PROVINCIAS EN LA DB");;
         }
-        return listProv;
+        return mapProv;
     }
     public HashMap<String, Producto> getMapProd() {
         if (opProd) {
@@ -281,6 +281,29 @@ public class Franquicia {
      * --> Los datos no se modificaron : \-> no hay que cargar datos en memoria.
      ***************************************************************
      */
+        public void viewProvincias() {
+        if (opProv) {
+            System.out.println("Cargando Provincias [........]");
+            if (cargarProv()){
+                
+        
+        
+                
+            } else {
+                System.out.print(" NO se han podido cargar las Provincias desde la DB  ");}
+        }
+                        System.out.println("_____________ FRANQUICIA : Provincias _____________");
+
+        for (Provincia p  : getMapProvincias().values()) {
+            System.out.println("["+p.getId()+"] =>> " + p.getNome());
+        }
+        System.out.println("===================================");
+        
+    }
+    
+    
+    
+    
     public void viewEmpleados() {
         if (opEmp) {
             cargarEmpleados();
@@ -342,37 +365,33 @@ public class Franquicia {
      ***************************************************************
      */
     
-    private void cargarProv(){
+    private boolean cargarProv(){
      ArrayList< String> auxListProv = null;
         try {
             Connection con = db.getConn();
             Statement statement = con.createStatement();
-
             //Probamos a realizar unha consulta
             ResultSet rs = statement.executeQuery("select * from PROVINCIA");
-            auxListProv = listProv;
-            listProv.clear();
-//                mapEmp=null;
+            
+            mapProv.clear();
             while (rs.next()) {
-                Provincia p = new Provincia(
-                        rs.getInt("PROVINCIA_id"),
-                        rs.getString("PROVINCIA_nome")
-                );
-                listProv.add(p.getId(), p.getNome());
+                Provincia pv = new Provincia(
+                rs.getInt("PROVINCIA_id"),
+                rs.getString("PROVINCIA_name"));
+                mapProv.put(pv.getId(), pv);
             }
         } catch (SQLException e) {
             System.err.println(e.getMessage());
+            return false;
+        }catch (Exception ex) {
+            System.err.println(ex.getMessage());
+        return false;
         } finally {
             opProv = false;
             DB_driver.finishDB();
-//                if (mapTienda.isEmpty()){ // si no se cargan nuevos datos
-//                        mapEmp=auxMapEmp;
-//                        System.out.println(" Error no se han cargado datos en la tienda");
-//                    } 
         }
-    
+        return true;
     }
-    
     
     private void cargarEmpleados() {
         HashMap<String, Empleado> auxMapEmp = null;
@@ -415,7 +434,6 @@ public class Franquicia {
             auxMapCli = mapCli;
             mapCli.clear();
             while (rs.next()) {
-
                 Cliente c = new Cliente(
                         rs.getString("CLIENTE_name"),
                         rs.getString("CLIENTE_apellido"),

@@ -22,7 +22,7 @@ public class JSonMake {
     ReadObjJsonInFileProvincias();
     }
 
-    static File f = new File(".\\src\\main\\java\\com\\bieitosousa\\ad03_db\\Json\\provincias.json");
+    static File f = new File(".\\provincias.json");
 
     public static void setFile(File file) {
         f = file;
@@ -114,37 +114,41 @@ public class JSonMake {
         List<Provincia> provinciasList = null;
         try (Reader reader = new FileReader(f)) {
             // Convert JSON File to Java Object
-            System.out.println("1___si se lee el fichero");
             obj = gson.fromJson(reader, Provincias.class);
-            System.out.println("se crean provincias");
             provinciasList = obj.getProvincias();
-            System.out.println("se optiene provincia");
         } catch (IOException e) {
             e.printStackTrace();
         }
         return provinciasList;
     }
     
-     public static void CargarFileProvincias(File f){
+     public static  boolean  CargarFileProvincias(File f){
     Gson gson = new Gson();
         Provincias obj = null;
         List<Provincia> provinciasList = null;
+        System.out.println("=== INTENTADO CARGAR EL FICHERO ==== [ "+f.toString()+"]");
         try (Reader reader = new FileReader(f)) {
-            // Convert JSON File to Java Object
-            System.out.println("1___si se lee el fichero");
+            System.out.println("-- INTETADO LEER PROVINCIAS");
             obj = gson.fromJson(reader, Provincias.class);
-            System.out.println("se crean provincias");
+            if (obj != null){
+                System.out.println("INSERTANDO PROVIENCIAS");
+            
             provinciasList = obj.getProvincias();
-            System.out.println("se optiene provincia");
+            }
         } catch (IOException e) {
             e.printStackTrace();
+            return false;
         }
+         System.out.println("=== INTENTADO LEER EL FICHERO ==== [ "+f.toString()+"]");
         if(provinciasList.size()>0){
-            System.out.println("provincias generadas con exito");
-            
-        }else{
-            System.out.println("fallo al cargar las provincias");
+            System.out.println("leyendo ..........................");
+             for (Provincia p :  provinciasList){
+                 System.out.print(p.getNome()+",");
         }
+        }else{
+            System.out.println("fallo al CARGAR fichero provincias "+f.toString());
+        }
+        return true;
     }
 
 //public static Compania ReadObjJsonInFileCompania( File objectFile){

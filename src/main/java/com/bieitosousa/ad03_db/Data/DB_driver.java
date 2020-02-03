@@ -186,11 +186,22 @@ public class DB_driver {
     }
 
     private static void getData() {
+        
         if (!dbExist()) {// si no esta creada la base de datos la creamos   
             for (int i = 0; i < DBsql.length; i++) {
-                createTable(getConn(), DBsql[i]);
+                if(createTable(getConn(), DBsql[i])){
+                 System.out.println("Tabla ["+i+"] cargada correctamente");
+                    
+                }else{
+                System.out.println("NO se han cargado las tablas correctamente : es necesario que se cargen ["+DBsql.length+ "] tablas");
+
+                }
             }
-        JSonMake.CargarFileProvincias(new File(".\\src\\main\\java\\com\\bieitosousa\\ad03_db\\Json\\provincias.json"));    
+        if(JSonMake.CargarFileProvincias(new File(".\\provincias.json"))){
+            System.out.println("Cargadas provincias en DB");
+        }else {
+            System.out.println("NO se ha cargado las provincias en la DB");;    
+        }
         }
     }
 
@@ -210,7 +221,7 @@ public class DB_driver {
         return exist;
     }
 
-    private static void createTable(Connection con, String sql) {
+    private static boolean createTable(Connection con, String sql) {
         try {
             /* String sql = "CREATE TABLE IF NOT EXISTS person (\n" +
                     "id integer PRIMARY KEY,\n"+
@@ -221,7 +232,11 @@ public class DB_driver {
             stmt.execute(sql);
         } catch (SQLException e) {
             System.out.println(e.getMessage() + " SQL FALLIDO {{______\n " + sql + "\n______}}");
+            return false;
+        } finally {
+            DB_driver.finishDB();
         }
+        return true;
     }
 
     /**
@@ -361,7 +376,7 @@ public class DB_driver {
     private boolean insertProvincia(Connection con,int id, String name) {
         try {
             //Fixate que no código SQL o valor do nome e "?". Este valor engadiremolo despois
-            String sql = "INSERT INTO TIENDA(PROVINCIA_id, PROVINCIA_name) VALUES(?,?)";
+            String sql = "INSERT INTO PROVINCIA (PROVINCIA_id, PROVINCIA_name) VALUES(?,?)";
             PreparedStatement pstmt = con.prepareStatement(sql);
 
             //Aquí e cando engadimos o valor do nome
